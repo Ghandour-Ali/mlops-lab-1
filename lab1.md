@@ -109,10 +109,10 @@ Que voit-on sur DagsHub ?
 
 Réponse :
 
-- **Le code sur GitHub :** Oui. Le commit contenant les pointeurs DVC (notamment `data.dvc`) a été poussé sur GitHub et est visible dans le dépôt.
-- **Les données :** Les fichiers de données bruts ne sont pas stockés dans Git (ils sont listés dans `.gitignore`). Les données elles‑mêmes sont sur le remote DVC (DagsHub) — `dvc push` a renvoyé « Everything is up to date », donc les objets sont disponibles sur le remote.
-- **Fichier de liaison :** `data.dvc` fait le lien entre le dépôt Git et les objets de données versionnés par DVC. Les configurations de remote sont dans `.dvc/config` ou `.dvc/config.local`.
-- **Ce qu'on voit sur DagsHub :** dans l'onglet *Data* (ou la section Storage) on voit l'artefact poussé, sa taille totale (~1.1 GB), le nombre de fichiers (16643), le hash/ID (md5) et la possibilité de télécharger les fichiers ou consulter les métadonnées.
+- Le code sur GitHub : Oui. Le commit contenant les pointeurs DVC (notamment `data.dvc`) a été poussé sur GitHub et est visible dans le dépôt.
+- Les données : Les fichiers de données bruts ne sont pas stockés dans Git (ils sont listés dans `.gitignore`). Les données elles‑mêmes sont sur le remote DVC (DagsHub) — `dvc push` a renvoyé « Everything is up to date », donc les objets sont disponibles sur le remote.
+- Fichier de liaison : `data.dvc` fait le lien entre le dépôt Git et les objets de données versionnés par DVC. Les configurations de remote sont dans `.dvc/config` ou `.dvc/config.local`.
+- Ce qu'on voit sur DagsHub : dans l'onglet Data (ou la section Storage) on voit l'artefact poussé, sa taille totale (~1.1 GB), le nombre de fichiers (16643), le hash/ID (md5) et la possibilité de télécharger les fichiers ou consulter les métadonnées.
 
 
 
@@ -125,6 +125,21 @@ Le dossier `data` est-il directement présent après le clone ?
 Quelle commande DVC faut-il utiliser pour récupérer les données ?
 
 Réponse :
+
+- Le dossier `data` n'est pas automatiquement présent** après un `git clone` car les fichiers de données bruts sont gérés par DVC et exclus de Git (`.gitignore` contient `/data`). Le dépôt cloné contient le fichier `data.dvc` (le pointeur) mais pas les fichiers réels.
+
+- la commande pour récupérer les données :
+
+```powershell
+git clone https://github.com/Ghandour-Ali/mlops-lab-1.git
+cd mlops-lab-1
+.venv\Scripts\dvc.exe remote list   # vérifier le remote DVC (optionnel)
+.venv\Scripts\dvc.exe pull -r origin
+```
+
+Ou, si vous préférez, vous pouvez exécuter `dvc fetch -r origin` pour seulement télécharger dans le cache, puis `dvc checkout` pour restaurer les fichiers dans le workspace.
+
+Notes : si le remote DVC nécessite des credentials, configurez-les localement (`dvc remote modify origin --local ...`) avant le `dvc pull`.
 
 
 
@@ -141,3 +156,26 @@ puis :
 Est-ce que les dossiers `food11_processed` et `food11_processed_mini` apparaissent ?
 
 Réponse :
+
+- **Ça dépend** : ces dossiers n'apparaîtront que si, dans le commit sur lequel vous avez basculé, ils étaient suivis (par Git ou DVC).
+
+- Si `food11_processed` et `food11_processed_mini` étaient suivis par **DVC** dans cet ancien commit (il existait des fichiers `.dvc` ou des métadonnées DVC correspondant), alors :
+	- `git checkout <old-commit>` mettra à jour les pointeurs dans le dépôt.
+	- `dvc checkout` restaurera les dossiers depuis le cache local s'ils y sont présents.
+	- Si le cache local ne contient pas les objets, exécutez `dvc pull -r origin` pour les télécharger depuis le remote, puis relancez `dvc checkout`.
+
+- Si ces dossiers **n'étaient pas** suivis par DVC (ou n'existaient pas dans l'ancien commit), `dvc checkout` ne les créera pas.
+
+Commandes utiles :
+```powershell
+# choisir un commit ancien
+git log --oneline
+git checkout <old-commit>
+
+# restaurer selon les pointeurs DVC (utilise le cache local)
+.venv\Scripts\dvc.exe checkout
+
+# si des objets manquent dans le cache
+.venv\Scripts\dvc.exe pull -r origin
+.venv\Scripts\dvc.exe checkout
+```
