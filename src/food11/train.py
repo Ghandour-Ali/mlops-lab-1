@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import argparse
+import random
+import sys
 from pathlib import Path
 
 import mlflow
@@ -8,7 +10,7 @@ import mlflow.pytorch
 import torch
 from torch import nn, optim
 from torch.utils.data import DataLoader
-from torchvision import datasets, models, transforms
+from torchvision import datasets, models
 from torchvision.models import ResNet18_Weights
 
 
@@ -23,6 +25,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--batch-size", type=int, default=32)
     parser.add_argument("--data-root", type=Path, default=Path("data"))
     parser.add_argument("--num-workers", type=int, default=0)
+    parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--threads", type=int, default=4)
+    parser.add_argument("--tracking-uri", default="http://127.0.0.1:5000")
+    parser.add_argument("--comparison-group", default="manual")
     return parser.parse_args()
 
 
@@ -43,6 +49,9 @@ def make_loaders(root: Path, batch_size: int, num_workers: int) -> tuple[DataLoa
     }
     if any(len(dataset.classes) != CLASS_COUNT for dataset in datasets_by_split.values()):
         raise ValueError(f"Expected {CLASS_COUNT} classes, found {datasets_by_split['training'].classes}")
+    if any(dataset.class_to_idx != datasets_by_split["training"].class_to_idx
+           for dataset in datasets_by_split.values()):
+        raise ValueError("Class mappings differ between splits")
     loaders = {
         split: DataLoader(
             dataset,
@@ -72,15 +81,25 @@ def evaluate(model: nn.Module, loader: DataLoader, device: torch.device) -> tupl
 
 
 def main() -> None:
+    # MLflow prints Unicode links when ending a run; Windows pipes may use cp1252.
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(encoding="utf-8")
     args = parse_args()
+    if args.epochs < 1 or args.batch_size < 1 or args.lr <= 0 or args.threads < 1:
+        raise ValueError("epochs, batch-size, lr and threads must be positive")
+    random.seed(args.seed)
+    torch.manual_seed(args.seed)
+    torch.set_num_threads(args.threads)
     root = dataset_root(args.data_root, args.dataset)
     train_loader, validation_loader, test_loader = make_loaders(root, args.batch_size, args.num_workers)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    mlflow.set_tracking_uri("http://127.0.0.1:5000")
+    mlflow.set_tracking_uri(args.tracking_uri)
     mlflow.set_experiment("food11")
 
-    with mlflow.start_run():
+    with mlflow.start_run(run_name=f"resnet18_lr{args.lr}_bs{args.batch_size}_seed{args.seed}"):
+        mlflow.set_tag("comparison_group", args.comparison_group)
         mlflow.log_params(
             {
                 "dataset": args.dataset,
@@ -88,8 +107,15 @@ def main() -> None:
                 "lr": args.lr,
                 "batch_size": args.batch_size,
                 "device": str(device),
+                "seed": args.seed,
+                "threads": args.threads,
+                "architecture": "resnet18",
+                "train_images": len(train_loader.dataset),
+                "validation_images": len(validation_loader.dataset),
+                "test_images": len(test_loader.dataset),
             }
         )
+        mlflow.log_dict(train_loader.dataset.class_to_idx, "class_to_idx.json")
 
         model = models.resnet18(weights=ResNet18_Weights.DEFAULT)
         model.fc = nn.Linear(model.fc.in_features, CLASS_COUNT)
@@ -125,13 +151,14 @@ def main() -> None:
                 f"epoch={epoch + 1}/{args.epochs} "
                 f"train_loss={train_loss:.4f} "
                 f"val_loss={validation_loss:.4f} "
-                f"val_accuracy={validation_accuracy:.4f}"
+                f"val_accuracy={validation_accuracy:.4f}", flush=True
             )
 
         test_loss, test_accuracy = evaluate(model, test_loader, device)
         mlflow.log_metric("test_accuracy", test_accuracy)
         mlflow.log_metric("test_loss", test_loss)
-        input_example = torch.zeros(1, 3, 224, 224, device=device)
+        model.to("cpu")
+        input_example = torch.zeros(1, 3, 224, 224).numpy()
         mlflow.pytorch.log_model(
             model,
             "model",

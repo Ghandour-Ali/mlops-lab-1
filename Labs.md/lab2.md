@@ -1,201 +1,164 @@
-# Lab 2 - Entraînement et suivi des expériences avec MLflow
+# Lab 2 — Entraînement et suivi des expériences avec MLflow
 
-## Mise en place de l'environnement
+Les quatre expériences ci-dessous ont été exécutées le 17 septembre 2026 et
+vérifiées dans MLflow. Elles utilisent ResNet18 pré-entraîné, 11 classes,
+le même mini-dataset, cinq époques, Adam et la graine 42, sur CPU (4 threads).
+Le groupe MLflow est `lab2-completion-2026-09-17` dans l'expérience `food11`.
 
-Les dépendances suivantes ont été ajoutées au projet avec `uv` :
+## Question 1 — Dépendances et verrouillage
 
-- `mlflow`
-- `torch`
-- `torchvision`
-- `scikit-learn`
+`pyproject.toml` déclare MLflow, torch, torchvision et scikit-learn.
+L'index explicite `pytorch-cpu` fournit torch et torchvision pour CPU.
+Pillow est utilisé pour préparer les images ; NumPy et Matplotlib servent
+à vérifier les modèles et produire le graphique comparatif.
+`uv.lock` fixe les versions et les empreintes des dépendances directes et
+transitives. L'environnement est réinstallable avec `uv sync --locked`.
+Versions utilisées : MLflow 3.16.0, torch 2.14.0+cpu,
+torchvision 0.29.0+cpu, scikit-learn 1.9.1.
 
-Comme l'entraînement est réalisé sur CPU, `torch` et `torchvision` utilisent l'index CPU de PyTorch. La configuration correspondante se trouve dans `pyproject.toml`. Docker et Docker Compose sont également installés et disponibles.
+## Question 2 — Serveur, métadonnées et artifacts
 
-## Question 1
-**En regardant `pyproject.toml` et `uv.lock`, qu'est-ce qui a changé ?**
-
-Réponse :
-
-`pyproject.toml` contient maintenant les quatre dépendances nécessaires au lab, avec leurs contraintes de version. Il contient aussi une source explicite `pytorch-cpu` pour éviter l'installation de la version CUDA.
-
-`uv.lock` a été généré ou mis à jour par `uv`. Il enregistre les versions exactes des dépendances directes et transitives afin que l'environnement soit reproductible sur une autre machine.
-
-Les imports ont été vérifiés avec les versions suivantes :
-
-```text
-mlflow      3.16.0
-torch       2.14.0+cpu
-torchvision 0.29.0+cpu
-scikit-learn 1.9.1
-```
-
-## Serveur de suivi MLflow
-
-Le serveur local a été lancé avec :
+Le serveur est lancé depuis la racine du projet :
 
 ```powershell
-uv run mlflow server --host 127.0.0.1 --port 5000 `
-  --backend-store-uri sqlite:///mlflow.db `
-  --default-artifact-root ./mlruns
+uv run mlflow server --host 127.0.0.1 --port 5000 --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./mlruns --workers 1
 ```
 
-L'interface est accessible à l'adresse : `http://127.0.0.1:5000`.
+`--backend-store-uri` désigne le stockage des métadonnées : expériences,
+statuts, paramètres, métriques, tags et références des modèles. Ici, il s'agit
+de SQLite dans `mlflow.db`. `--default-artifact-root` désigne le stockage des
+fichiers produits : modèles, environnements et graphiques, ici sous `mlruns/`.
+L'interface locale est http://127.0.0.1:5000.
 
-## Question 2
-**À quoi servent `--backend-store-uri` et `--default-artifact-root` ? Quelle est la différence entre les métadonnées et les artifacts ?**
+## Question 3 — Exclusions de Git et DVC
 
-Réponse :
+`mlflow.db` et `mlruns/` sont des sorties de suivi modifiées à chaque exécution,
+potentiellement volumineuses et liées à l'installation locale. Git conserve
+le code et le compte rendu ; MLflow gère les expériences. Les suivre également
+avec DVC dupliquerait cette responsabilité et mélangerait les expériences
+avec les datasets de référence. Ces chemins sont ignorés par Git et ne sont
+déclarés dans aucun fichier DVC. Les fichiers SQLite temporaires, `.venv/`
+et `local_results/` sont également ignorés.
 
-`--backend-store-uri` indique où MLflow stocke les métadonnées de suivi : expériences, runs, paramètres, métriques, tags et références vers les artifacts. Dans ce lab, ces métadonnées sont stockées dans la base SQLite `mlflow.db`.
+## Question 4 — Création de l'expérience
 
-`--default-artifact-root` indique l'emplacement où MLflow stocke les fichiers produits par les runs. Ici, les artifacts sont placés dans le dossier local `mlruns/`.
+`mlflow.set_experiment("food11")` crée l'expérience si elle n'existe pas,
+puis l'active pour les nouveaux runs. Sa création a été observée lors du
+premier entraînement ; son identifiant dans ce serveur est `1`.
 
-Les métadonnées décrivent l'exécution et ses résultats sous forme structurée. Les artifacts sont les fichiers associés au run, par exemple un modèle entraîné, un fichier de configuration ou un rapport.
+## Préparation et protocole
 
-## Question 3
-**Pourquoi `mlflow.db` et `mlruns/` ne doivent-ils être suivis ni par Git ni par DVC ?**
+`src/food11/prepare_mini.py` sélectionne les 100 premiers noms triés par classe
+et par split, ou tous les fichiers si la classe en contient moins. Il conserve
+les splits officiels, convertit en RGB, redimensionne à 128×128 avec Lanczos,
+et écrit les images JPEG (qualité 95) dans des dossiers portant les noms des
+catégories. Le mini-dataset contient 1 100 images d'entraînement,
+1 096 de validation et 1 096 d'évaluation. Les classes Rice de validation
+et d'évaluation contiennent chacune 96 images.
 
-Réponse :
-
-Ces éléments sont des sorties locales du serveur MLflow. Ils peuvent devenir volumineux, être modifiés automatiquement à chaque run et contenir des chemins ou des informations propres à la machine utilisée.
-
-Ils ne font pas partie du code source ni du dataset de référence. Les versionner avec Git créerait du bruit dans l'historique et des conflits fréquents. Les suivre avec DVC mélangerait les résultats d'expériences avec les données d'entraînement. Ils sont donc exclus de Git avec :
+Les 3 292 images régénérées ont été comparées octet par octet au mini-dataset
+utilisé pour ces expériences : elles sont identiques. Empreinte du dataset
+(chemins relatifs triés et SHA-256 des fichiers) :
 
 ```text
-mlflow.db
-mlruns/
+52c6203b8b36096e266cda5d2e129633733de8daae33aa3517f7f8fa30e6571c
 ```
 
-## Question 4
-**Que se passe-t-il lors du premier appel à `mlflow.set_experiment` avec un nom inexistant ?**
+Pendant l'entraînement, les transformations des poids pré-entraînés produisent
+des tenseurs normalisés 224×224. `ImageFolder` et `DataLoader` chargent les images.
+La dernière couche de ResNet18 est remplacée par une couche à 11 sorties et
+tous les paramètres du réseau sont entraînés. La correspondance `class_to_idx`
+est vérifiée entre les splits et enregistrée comme artifact.
 
-Réponse :
+## Question 5 — Paramètres, métriques et step
 
-MLflow crée automatiquement une nouvelle expérience portant ce nom. Dans ce lab, l'appel :
+Un paramètre est une configuration fixe du run : `lr`, `batch_size`, `epochs`,
+dataset, architecture, device ou seed. `mlflow.log_params` les enregistre au début.
+Une métrique est une mesure : loss ou accuracy. Elle peut évoluer.
+`mlflow.log_metrics(..., step=epoch)` enregistre `train_loss`, `val_loss`
+et `val_accuracy` aux steps 0 à 4. Le step permet de tracer leur évolution
+et de comparer les mêmes époques. `test_accuracy` et `test_loss` sont enregistrées
+après l'entraînement, sur le split evaluation.
 
-```python
-mlflow.set_experiment("food11")
-```
+## Question 6 — Consulter et retrouver le modèle
 
-a créé l'expérience `food11`, visible ensuite dans l'interface MLflow. Les runs suivants sont associés à cette expérience au lieu de l'expérience `Default`.
-
-## Préparation des données
-
-Le dataset disponible était organisé sous forme de fichiers nommés, par exemple `0_0.jpg`, directement dans les dossiers `training`, `validation` et `evaluation`. Cette structure n'est pas suffisante pour `torchvision.datasets.ImageFolder`, qui attend un dossier par classe.
-
-Le script `src/food11/prepare_mini.py` prépare donc une version réduite sous la forme :
+Dans MLflow, ouvrir `food11`, puis le run pour voir ses paramètres et ses courbes.
+Le modèle sauvegardé est lié au run et consultable dans les modèles/artifacts.
+Avec cette version de MLflow, les modèles ont leur propre identifiant `m-...`.
+Celui du meilleur run est `m-8e427b8761db489ab128445e3ea91675` et son emplacement réel est :
 
 ```text
-data/food11_processed_mini/
-├── training/0 ... training/10
-├── validation/0 ... validation/10
-└── evaluation/0 ... evaluation/10
+file:///C:/Users/user/Documents/Mlopslab1/.verification/lab2-work/mlruns/1/models/m-8e427b8761db489ab128445e3ea91675/artifacts
 ```
 
-Le script utilise des hardlinks lorsque le système le permet, afin d'éviter une copie inutile des images. Le mini-dataset préparé contient 11 classes et environ 100 images par classe et par split.
+La sauvegarde utilise `mlflow.pytorch.log_model` avec un exemple d'entrée
+et `serialization_format="pickle"`. Chaque modèle de cette comparaison a été
+rechargé et testé : sortie de forme `(1, 11)` et valeurs finies. Il faut conserver
+la base `mlflow.db` et les fichiers `mlruns/` pour les retrouver au prochain lab.
 
-## Entraînement
+## Question 7 — Comparaison des learning rates
 
-Le script `src/food11/train.py` :
+Résultats finaux, triés par accuracy de validation (valeurs entre 0 et 1) :
 
-- charge les données avec `ImageFolder` et `DataLoader` ;
-- utilise un `resnet18` pré-entraîné ;
-- remplace sa dernière couche pour produire 11 classes ;
-- accepte `--dataset`, `--epochs`, `--lr` et `--batch-size` ;
-- utilise le CPU lorsqu'aucun GPU CUDA n'est disponible ;
-- enregistre les paramètres et les métriques dans MLflow ;
-- enregistre le modèle final comme artifact MLflow.
+| Run ID | lr | Batch size | val_accuracy | test_accuracy | Statut |
+| --- | ---: | ---: | ---: | ---: | --- |
+| `3acfe1a891994c78b89de31feb99ef30` | 0.0001 | 32 | 0.8102 | 0.8321 | FINISHED |
+| `e8ad814f169b4992a7ad3c750a403e1b` | 0.001 | 64 | 0.5839 | 0.5976 | FINISHED |
+| `106b40073a9346b1bd7384429f290a7b` | 0.001 | 32 | 0.5639 | 0.5721 | FINISHED |
+| `dc69705a3a9046218fae6a7904851474` | 0.01 | 32 | 0.1414 | 0.1560 | FINISHED |
 
-Exemple d'exécution :
+À batch size 32 et cinq époques, la meilleure learning rate testée est
+**0.0001**, avec **81.02 %** de validation.
+Une learning rate plus élevée n'est pas systématiquement meilleure : les
+valeurs observées ci-dessus doivent être comparées à protocole identique.
+Ces quatre runs ne permettent pas de conclure à un optimum général pour Food-11.
+
+## Question 8 — Coordonnées parallèles
+
+Le graphique `comparison/parallel_coordinates.png` est enregistré comme artifact
+du meilleur run. Il relie `lr` (axe logarithmique), `batch_size` et `val_accuracy`,
+avec chaque axe normalisé pour la visualisation. Les étiquettes donnent les
+configurations réelles. On peut également sélectionner ces quatre runs dans
+l'interface MLflow, cliquer sur **Compare** et choisir ces trois axes.
+
+À `lr=0.001`, passer de batch size 32 à 64 fait passer `val_accuracy` de
+**0.5639** à **0.5839**,
+soit **+2.01 points de pourcentage**.
+Les trois lignes à batch size 32 montrent séparément l'effet du learning rate.
+La meilleure combinaison observée est `lr=0.0001`, `batch_size=32`.
+Il s'agit d'une observation avec une seule graine et cinq époques, pas d'une
+preuve que cette combinaison sera toujours la meilleure.
+
+## Question 9 — Meilleur run pour le prochain lab
+
+Après tri décroissant de la **val_accuracy finale** parmi les quatre runs
+terminés de ce groupe :
+
+```text
+Run ID: 3acfe1a891994c78b89de31feb99ef30
+Model URI: models:/m-8e427b8761db489ab128445e3ea91675
+val_accuracy: 0.810219
+test_accuracy: 0.832117
+```
+
+L'accuracy de test est rapportée après sélection ; elle ne sert pas à choisir
+le meilleur modèle. Le fichier local `local_results/comparison.json` et son
+artifact MLflow conservent les quatre identifiants et leurs résultats.
+
+## Vérifications et reproduction
+
+Les quatre runs ont le statut FINISHED, cinq points par métrique d'époque,
+une accuracy finale de test et un modèle rechargé avec succès. Le premier
+run avait terminé calcul et sauvegarde mais rencontré une erreur d'affichage
+Unicode Windows au moment de sa clôture. Après vérification des métriques et
+rechargement du modèle, son statut a été finalisé ; un tag documente cette
+récupération. Le script corrige l'encodage pour les exécutions suivantes.
+
+Pour refaire la comparaison, après préparation du dataset et démarrage du serveur :
 
 ```powershell
-uv run python src/food11/train.py `
-  --dataset mini --epochs 5 --lr 0.001 --batch-size 32
+uv run python src/food11/compare_runs.py --group lab2-comparison --epochs 5 --run-missing
 ```
 
-## Question 5
-**Quelle est la différence entre `mlflow.log_param` et `mlflow.log_metric` ? Pourquoi `log_metric` utilise-t-il `step` ?**
-
-Réponse :
-
-Un paramètre est une valeur fixée pour une exécution, par exemple le learning rate, la taille des batches ou le nombre d'époques. Il est enregistré avec `mlflow.log_param` ou `mlflow.log_params`.
-
-Une métrique est une valeur mesurée pendant ou après l'entraînement, par exemple la loss ou l'accuracy. Elle peut être enregistrée plusieurs fois avec `mlflow.log_metric`.
-
-Le paramètre `step` indique la position de la mesure dans le temps, ici le numéro de l'époque. MLflow peut ainsi afficher l'évolution de `train_loss`, `val_loss` et `val_accuracy` sous forme de courbes. Un paramètre n'évolue pas au cours du run, donc il n'a pas besoin de `step`.
-
-## Question 6
-**Où trouve-t-on les paramètres, les courbes de métriques et le modèle ? Où le modèle est-il stocké ?**
-
-Réponse :
-
-Dans MLflow, il faut ouvrir l'expérience `food11`, puis l'onglet **Training runs** et sélectionner un run. La page du run affiche :
-
-- les paramètres : dataset, epochs, learning rate, batch size et device ;
-- les métriques : `train_loss`, `val_loss`, `val_accuracy`, `test_loss` et `test_accuracy` ;
-- le modèle enregistré dans la section des artifacts du run.
-
-Avec MLflow 3.16, l'artifact de modèle est géré dans le stockage local de l'expérience sous `mlruns/1/models/`. Les métadonnées du run restent référencées par `mlflow.db`.
-
-Un run réussi utilisé pendant le lab est :
-
-```text
-Run ID: 05211f2bf57a46bc9cb56d383dd5cf18
-```
-
-## Question 7
-**Quelle learning rate a donné la meilleure `val_accuracy` ? Est-ce que plus élevé est toujours meilleur ?**
-
-Réponse :
-
-Les trois premiers essais ont permis de comparer plusieurs valeurs. Les métriques enregistrées étaient :
-
-```text
-lr=0.001   val_accuracy=0.4352  run interrompu lors du premier log du modèle
-lr=0.001   val_accuracy=0.3714  run interrompu lors du second test de logging
-lr=0.001   val_accuracy=0.2527  run terminé avec modèle enregistré
-```
-
-Ces essais ne constituent pas encore une comparaison propre de plusieurs learning rates, car les deux premières exécutions ont échoué pendant l'enregistrement du modèle et utilisaient la même valeur de `lr`. La valeur `0.001` est celle testée avec succès, mais il faut lancer les essais `0.01`, `0.001` et `0.0001` prévus par l'énoncé pour tirer une conclusion fiable.
-
-Une learning rate plus élevée n'est donc pas toujours meilleure. Une valeur trop élevée peut rendre l'optimisation instable, tandis qu'une valeur trop faible peut ralentir l'apprentissage.
-
-## Question 8
-**Quel motif observe-t-on avec `lr`, `batch_size` et `val_accuracy` dans le graphique de coordonnées parallèles ?**
-
-Réponse :
-
-Le graphique permet de relier les choix d'hyperparamètres aux résultats. Il faut comparer des runs terminés avec le même dataset et le même nombre d'époques. En général, le meilleur compromis est celui qui relie une learning rate stable et une taille de batch adaptée à la quantité de données disponible.
-
-Sur ce mini-dataset, il ne faut pas conclure qu'un seul hyperparamètre explique toujours le résultat : l'interaction entre learning rate, batch size et durée d'entraînement peut modifier fortement la validation.
-
-## Question 9
-**Quel est le meilleur run après un tri décroissant par `val_accuracy` ?**
-
-Réponse :
-
-Dans l'état actuel, le meilleur score de validation enregistré est `0.4352`, associé au run :
-
-```text
-e9b8e1e9ac044eda9f559745f2ec146c
-```
-
-Cependant, ce run est marqué comme échoué parce qu'il a été créé avant la correction du format de sauvegarde MLflow. Le meilleur run terminé correctement est :
-
-```text
-Run ID: 05211f2bf57a46bc9cb56d383dd5cf18
-val_accuracy: 0.2527
-test_accuracy: 0.2673
-```
-
-Pour répondre définitivement à la question, il faut comparer les quatre exécutions complètes recommandées dans l'énoncé après la correction du logging du modèle.
-
-## Versionnement du code
-
-Le code et les dépendances du lab ont été commités et poussés avec :
-
-```text
-6eccf89 Start Lab 2 MLflow training
-```
-
-Les runs, métriques et artifacts restent dans MLflow. Le code reste versionné par Git, tandis que les datasets restent gérés par DVC.
+Le code et ce rapport sont versionnés dans Git. Les données de suivi détaillées,
+les modèles et le graphique restent dans MLflow.

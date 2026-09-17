@@ -1,36 +1,43 @@
 from __future__ import annotations
 
 import argparse
-import os
-import shutil
 from pathlib import Path
+
+from PIL import Image, ImageOps
 
 
 SPLITS = ("training", "validation", "evaluation")
-
-
-def link_or_copy(source: Path, destination: Path) -> None:
-    destination.parent.mkdir(parents=True, exist_ok=True)
-    try:
-        os.link(source, destination)
-    except (FileExistsError, OSError):
-        shutil.copy2(source, destination)
+CATEGORIES = ("Bread", "Dairy product", "Dessert", "Egg", "Fried food", "Meat",
+              "Noodles-Pasta", "Rice", "Seafood", "Soup", "Vegetable-Fruit")
 
 
 def prepare_dataset(source_root: Path, output_root: Path, limit_per_class: int) -> None:
+    if limit_per_class < 1:
+        raise ValueError("limit-per-class must be positive")
+    if output_root.exists() and any(output_root.iterdir()):
+        raise ValueError("Use an empty output folder; existing images are preserved")
+    selected = {}
     for split in SPLITS:
         source_split = source_root / split
-        output_split = output_root / split
         files_by_class: dict[str, list[Path]] = {str(label): [] for label in range(11)}
 
         for image_path in sorted(source_split.glob("*.jpg")):
             class_name = image_path.stem.split("_", maxsplit=1)[0]
             if class_name in files_by_class and len(files_by_class[class_name]) < limit_per_class:
                 files_by_class[class_name].append(image_path)
+        if not all(files_by_class.values()):
+            raise ValueError(f"Expected images for all 11 classes in {source_split}")
+        selected[split] = files_by_class
 
+    for split, files_by_class in selected.items():
         for class_name, image_paths in files_by_class.items():
+            output_class = output_root / split / CATEGORIES[int(class_name)]
+            output_class.mkdir(parents=True, exist_ok=True)
             for image_path in image_paths:
-                link_or_copy(image_path, output_split / class_name / image_path.name)
+                with Image.open(image_path) as image:
+                    image = ImageOps.exif_transpose(image).convert("RGB")
+                    image.resize((128, 128), Image.Resampling.LANCZOS).save(
+                        output_class / image_path.name, quality=95)
 
         total = sum(len(images) for images in files_by_class.values())
         print(f"{split}: {total} images")
