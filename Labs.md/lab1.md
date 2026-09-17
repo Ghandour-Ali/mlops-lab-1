@@ -74,7 +74,8 @@ Après `git clone`, le dossier `data` n'est pas forcément présent, car il est 
 ```powershell
 git clone https://github.com/Ghandour-Ali/mlops-lab-1.git
 cd mlops-lab-1
-.\.venv\Scripts\dvc.exe pull -r origin
+uv sync --locked
+uv run dvc pull -r origin
 ```
 
 Les credentials du remote doivent être configurés localement avant le `pull` si nécessaire.
@@ -87,3 +88,63 @@ Réponse :
 `git checkout` change les pointeurs versionnés par Git. Ensuite, `dvc checkout` restaure dans le workspace les données correspondant à ces pointeurs, si elles sont disponibles dans le cache local. Sinon, `dvc pull` doit être exécuté avant `dvc checkout`.
 
 Les dossiers n'apparaissent que s'ils sont référencés par le commit sélectionné.
+
+
+## Préparation complète et versions livrées
+
+Le script [src/food11/data.py](../src/food11/data.py) conserve les splits officiels,
+convertit les images en RGB 128×128 et les classe dans les 11 dossiers de catégories.
+Le mini-dataset retient les 100 premiers noms triés par catégorie et par split,
+ou tous les fichiers disponibles s'il y en a moins. Les sorties existantes sont préservées.
+
+| Dossier | Images |
+| --- | ---: |
+| food11_raw | 16 643 |
+| food11_processed | 16 643 |
+| food11_processed_mini | 3 292 |
+| Total | 36 578 |
+
+La version brute du dépôt est le commit `740a6e5`, hash DVC
+`a3a457d03c51ff8b037a833440f6ad13.dir`.
+Le pointeur actuel référence la version complète, hash
+`2292c4fa3fc6727803f77a0447e299a2.dir` (1 383 529 201 octets).
+Le commit historique « Create dataset version 2 » ajoutait seulement un fichier :
+la publication finale corrige le pointeur pour inclure les deux datasets préparés.
+
+Pour vérifier la question 8, après installation de l'environnement sur main :
+
+```powershell
+git checkout 740a6e5
+uv run dvc pull
+# food11_raw uniquement
+git checkout main
+uv run dvc pull
+# food11_raw + food11_processed + food11_processed_mini
+```
+
+Utiliser `dvc checkout` si le cache contient déjà les deux versions.
+Un contrôle isolé avec le cache local a précédemment restauré successivement
+36 578, 16 643, puis 36 578 fichiers. Il portait sur ces mêmes hashes dans
+le dossier de préparation initial ; il ne constituait pas une restauration
+intégrale depuis le stockage distant.
+
+Le [README](../README.md) décrit l'installation et la configuration locale des accès.
+L'URL DagsHub et la méthode d'authentification sont publiées dans `.dvc/config` ;
+aucun identifiant secret n'est publié. Les exports du lab 2 sont consultables
+directement sur GitHub, indépendamment de l'affichage DagsHub.
+
+## Vérification finale du stockage — 17 septembre 2026
+
+Le transfert des 6 180 objets restants de la version préparée a été terminé.
+Le manifeste distant de 36 578 fichiers a été téléchargé avec authentification
+et son hash MD5 vérifié. La commande `dvc push -j 16` a ensuite confirmé :
+**Everything is up to date.** Les objets de la version complète sont donc présents
+sur le remote DVC configuré. Le manifeste de la version brute a également été
+téléchargé et son hash vérifié.
+
+Cela ne signifie pas que l'interface du miroir Git fonctionne : lors du contrôle,
+l'API DagsHub indiquait encore `mirror: true, empty: true`. Une synchronisation
+a été demandée (HTTP 202). L'affichage des commits et des images dans cette
+interface reste à confirmer. Aucune restauration intégrale depuis un cache vide
+n'a été refaite lors de ce dernier contrôle. GitHub permet déjà de consulter
+les rapports, le code, les pointeurs, l'aperçu des images et les résultats exportés.

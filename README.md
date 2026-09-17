@@ -1,52 +1,95 @@
-# Food-11 — Lab 2: training and MLflow tracking
+# Food-11 — Labs 1 et 2
 
-See [the lab 2 report](Labs.md/lab2.md) for the nine answers and experiment results.
+Projet de préparation et de versionnement des données avec Git/DVC, puis entraînement et suivi d'expériences avec MLflow.
 
-## Prepare the environment and data
+## Parcours de lecture pour la correction
+
+| Élément | Contenu |
+| --- | --- |
+| [Rapport Lab 1](Labs.md/lab1.md) | Réponses aux 8 questions, données et versions |
+| [Rapport Lab 2](Labs.md/lab2.md) | Réponses aux 9 questions, protocole et résultats |
+| [Préparation complète](src/food11/data.py) | RGB 128×128, 11 catégories, splits officiels, mini ≤100 images/classe/split |
+| [Entraînement](src/food11/train.py) | ResNet18 préentraîné, 11 sorties, paramètres CLI, suivi MLflow |
+| [Comparaison](src/food11/compare_runs.py) | Quatre configurations et vérification des modèles sauvegardés |
+| [Aperçu des images](data_preview) | Une image par catégorie, consultable sur GitHub |
+| [Résultats détaillés](reports/lab2/comparison.json) | Paramètres, scores, statuts et identifiants des quatre runs |
+| [Métriques par époque](reports/lab2/metrics.csv) | Export des mesures réelles depuis la base MLflow |
+| [Pointeur DVC](data.dvc) | Version complète : 36 578 fichiers, raw + processed + mini |
+
+Les exports ci-dessous sont des pièces du compte rendu : ils sont lisibles sans lancer MLflow. La base de suivi et les fichiers des modèles restent hors Git, conformément au lab.
+
+## Résultats du Lab 2
+
+Quatre entraînements terminés : cinq époques, seed 42, Adam, même mini-dataset, toutes les couches de ResNet18 entraînées.
+
+| Learning rate | Batch size | Validation | Test |
+| ---: | ---: | ---: | ---: |
+| 0.0001 | 32 | **81,02 %** | **83,21 %** |
+| 0.001 | 64 | 58,39 % | 59,76 % |
+| 0.001 | 32 | 56,39 % | 57,21 % |
+| 0.01 | 32 | 14,14 % | 15,60 % |
+
+Le meilleur modèle est choisi sur la validation. Run : `3acfe1a891994c78b89de31feb99ef30`.
+
+![Courbes des quatre entraînements](reports/lab2/learning_curves.png)
+
+![Comparaison des configurations](reports/lab2/parallel_coordinates.png)
+
+## Reproduire les labs
 
 ```powershell
+git clone https://github.com/Ghandour-Ali/mlops-lab-1.git
+cd mlops-lab-1
 uv sync --locked
-uv run python src/food11/prepare_mini.py --source data/food11_raw --output data/food11_processed_mini
+uv run dvc pull
 ```
 
-The source must contain the original `training`, `validation`, and `evaluation`
-splits. The preparation script selects up to 100 images per category per split,
-converts to RGB, resizes to 128x128, and uses named category folders. It requires
-an empty destination to preserve existing data. If a 128x128 RGB mini dataset
-with named category folders is already prepared, skip this command. For older
-datasets, choose a new output folder instead of overwriting them.
-ResNet's pretrained input transform then produces
-normalized 224x224 tensors during training.
+Le stockage DVC utilise DagsHub et peut demander une authentification. Configurer son accès localement, sans publier de token :
 
-## Start MLflow in a separate terminal
+```powershell
+uv run dvc remote modify --local origin user VOTRE_UTILISATEUR_DAGSHUB
+uv run dvc remote modify --local origin password VOTRE_TOKEN_DAGSHUB
+uv run dvc pull
+```
+
+Si le téléchargement distant est indisponible, placer Food-11 original dans `data/food11_raw/{training,validation,evaluation}`, puis reconstruire les deux datasets :
+
+```powershell
+uv run python src/food11/data.py
+```
+
+Source : [Food-11 sur Kaggle](https://www.kaggle.com/datasets/karakaggle/food11). Le script exige des dossiers de sortie vides pour préserver les fichiers existants. Après un `dvc pull` complet, la préparation n'est pas nécessaire.
+
+Dans un terminal, démarrer MLflow depuis la racine du dépôt :
 
 ```powershell
 uv run mlflow server --host 127.0.0.1 --port 5000 --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./mlruns --workers 1
 ```
 
-Open http://127.0.0.1:5000 and select the `food11` experiment.
-
-## Train and compare
+Dans un autre terminal :
 
 ```powershell
-uv run python src/food11/train.py --dataset mini --epochs 5 --lr 0.001 --batch-size 32
-uv run python src/food11/compare_runs.py --group lab2-comparison --epochs 5 --run-missing
+uv run python src/food11/compare_runs.py --group lab2-reproduction --epochs 5 --run-missing
 ```
 
-The comparison runs four configurations: learning rates 0.01, 0.001 and 0.0001
-at batch size 32, then learning rate 0.001 at batch size 64. All use seed 42 and
-the same dataset. Existing finished runs in the selected group are reused.
-Use `--data-root PATH` when the dataset lives outside this checkout.
+Ouvrir http://127.0.0.1:5000 et sélectionner `food11`. Cette adresse désigne le serveur de la machine qui l'ouvre : elle ne donne pas accès aux anciens runs de l'auteur. Les scores exportés plus haut permettent leur consultation à distance ; une reproduction crée de nouveaux runs.
 
-The comparison script verifies all five epochs of each metric, reloads every
-saved model, tests its 11 outputs, and records the mini-dataset fingerprint.
-It saves a local summary and parallel-coordinates plot under `local_results/`
-and logs them as comparison artifacts on the best run (selected by final
-validation accuracy). Test accuracy does not determine model selection.
+## Versionnement des données — Lab 1
 
-In MLflow, select the four runs and click **Compare** to inspect their metric
-curves and parallel coordinates (`lr`, `batch_size`, `val_accuracy`).
+- Version brute : commit [`740a6e5`](https://github.com/Ghandour-Ali/mlops-lab-1/commit/740a6e5), 16 643 images.
+- Version complète : `data.dvc` actuel, 36 578 images, hash `2292c4fa3fc6727803f77a0447e299a2.dir`.
+- L'ancien commit intitulé « Create dataset version 2 » ajoutait un fichier, mais ne référençait pas les datasets préparés. Le pointeur actuel corrige cette omission sans réécrire l'historique.
 
-Code, dependency files and the written report are tracked by Git. `mlflow.db`,
-`mlruns/`, `.venv/`, and `local_results/` remain local and ignored. They are not
-DVC outputs. Keep the MLflow database and artifacts together for later labs.
+```powershell
+git log --oneline -- data.dvc
+git checkout 740a6e5
+uv run dvc pull
+git checkout main
+uv run dvc pull
+```
+
+Si les objets sont déjà en cache, `dvc checkout` suffit à la place de `dvc pull`. Pour garder les outils disponibles en visitant un ancien commit, utiliser l'environnement installé sur `main` (sans le resynchroniser).
+
+Les fichiers volumineux restent dans DVC ; GitHub contient code, pointeurs et comptes rendus. Le statut du stockage distant et de son affichage est documenté dans le rapport du lab 1.
+
+Contrôle du 17 septembre 2026 : transfert complet vers DagsHub et `dvc push` confirmé à jour. L'interface du miroir Git DagsHub reste à confirmer ; elle n'est pas nécessaire pour lire les rapports et résultats publiés ici.

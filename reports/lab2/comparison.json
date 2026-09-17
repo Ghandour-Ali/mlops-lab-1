@@ -1,0 +1,43 @@
+{
+  "group": "lab2-completion-2026-09-17",
+  "experiment_id": "1",
+  "dataset_sha256": "52c6203b8b36096e266cda5d2e129633733de8daae33aa3517f7f8fa30e6571c",
+  "runs": [
+    {
+      "run_id": "3acfe1a891994c78b89de31feb99ef30",
+      "lr": 0.0001,
+      "batch_size": 32,
+      "val_accuracy": 0.8102189781021898,
+      "test_accuracy": 0.8321167883211679,
+      "model_id": "m-8e427b8761db489ab128445e3ea91675",
+      "status": "FINISHED"
+    },
+    {
+      "run_id": "e8ad814f169b4992a7ad3c750a403e1b",
+      "lr": 0.001,
+      "batch_size": 64,
+      "val_accuracy": 0.583941605839416,
+      "test_accuracy": 0.5976277372262774,
+      "model_id": "m-d64981a5a93e4f9cb3ba2da6725a085f",
+      "status": "FINISHED"
+    },
+    {
+      "run_id": "106b40073a9346b1bd7384429f290a7b",
+      "lr": 0.001,
+      "batch_size": 32,
+      "val_accuracy": 0.5638686131386861,
+      "test_accuracy": 0.5720802919708029,
+      "model_id": "m-d0430dc222a140deb51038243e7c6185",
+      "status": "FINISHED"
+    },
+    {
+      "run_id": "dc69705a3a9046218fae6a7904851474",
+      "lr": 0.01,
+      "batch_size": 32,
+      "val_accuracy": 0.14142335766423358,
+      "test_accuracy": 0.15602189781021897,
+      "model_id": "m-f5535b3321e54284ad913b5050062ef0",
+      "status": "FINISHED"
+    }
+  ]
+}

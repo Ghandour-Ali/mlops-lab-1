@@ -160,5 +160,16 @@ Pour refaire la comparaison, après préparation du dataset et démarrage du ser
 uv run python src/food11/compare_runs.py --group lab2-comparison --epochs 5 --run-missing
 ```
 
-Le code et ce rapport sont versionnés dans Git. Les données de suivi détaillées,
-les modèles et le graphique restent dans MLflow.
+Le code et ce rapport sont versionnés dans Git. La base de suivi et les modèles restent dans MLflow. Des exports statiques des résultats et graphiques sont aussi publiés ci-dessous pour la correction à distance.
+
+
+## Résultats consultables directement sur GitHub
+
+- [Tableau des runs et scores (JSON)](../reports/lab2/comparison.json)
+- [Métriques des cinq époques (CSV)](../reports/lab2/metrics.csv)
+
+![Courbes d'apprentissage](../reports/lab2/learning_curves.png)
+
+![Coordonnées parallèles](../reports/lab2/parallel_coordinates.png)
+
+Ces exports proviennent de la base MLflow locale. Le professeur peut les consulter sans serveur MLflow ; les fichiers des modèles et la base SQLite restent locaux conformément à l'énoncé.
