@@ -110,3 +110,15 @@ Le [rapport du lab 3](lab3.md#reproduire-sur-la-machine-du-lab) donne les comman
 L'API Docker est accessible localement sur http://127.0.0.1:8002/docs quand les
 services tournent. Cette adresse n'est pas une démonstration publique ; les preuves
 exportées sur GitHub permettent l'évaluation sans accéder à l'ordinateur de l'auteur.
+
+### Image disponible sur Docker Hub
+
+[ghandourali/food11-api](https://hub.docker.com/r/ghandourali/food11-api) — plateforme Linux AMD64.
+
+```powershell
+docker pull ghandourali/food11-api:lab3-7ab74c2
+```
+
+Voir le [guide de démarrage](DOCKER_HUB.md) et la
+[preuve de publication avec digest](reports/lab3/dockerhub.json).
+Le conteneur doit pouvoir joindre MLflow pour charger `food11@champion`.

@@ -187,7 +187,7 @@ correcte et le score softmax n'est pas une garantie de justesse.
 
 **Réponse :**
 
-Git versionne la recette, pas les couches binaires. Il reste à pousser l'image
+Git versionne la recette, pas les couches binaires. Pour la partager, il faut pousser l'image
 dans un registre tel que GHCR ou Docker Hub, à donner accès aux machines cibles
 et à déployer une référence immuable `nom@sha256:...` plutôt que seulement `latest`.
 L'architecture doit être compatible. Les machines cibles doivent aussi pouvoir
@@ -195,8 +195,13 @@ joindre MLflow et son stockage. Pour figer totalement le comportement, il faut
 également figer la version du modèle : un alias mutable ne garantit pas le même
 modèle lors d'un prochain démarrage.
 
-Ce lab construit et teste les images localement ; aucune publication dans un
-registre d'images n'est présentée comme réalisée.
+En complément du lab, l'image est publiée sur
+[Docker Hub — ghandourali/food11-api](https://hub.docker.com/r/ghandourali/food11-api),
+avec les tags `lab3-7ab74c2` et `latest`. La preuve de publication et le digest
+vérifié sont conservés dans [dockerhub.json](reports/lab3/dockerhub.json).
+Le [guide Docker Hub](DOCKER_HUB.md) décrit le téléchargement et le démarrage,
+ainsi que l'accès MLflow nécessaire. Docker Hub distribue l'image, mais ne
+fait pas tourner l'API à la place d'une machine d'exécution.
 
 ## Reproduire sur la machine du lab
 
