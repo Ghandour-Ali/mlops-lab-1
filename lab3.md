@@ -10,7 +10,11 @@ Le run d'entraînement retenu est `3acfe1a891994c78b89de31feb99ef30` :
 validation **81,02 %**, test **83,21 %**. Les fichiers des modèles et les bases
 MLflow restent hors Git ; le code, les réponses et les preuves de test sont publiés.
 
-## Q1 — Modèle enregistré et artifact d'un run
+## Question 1 — Modèle enregistré et artifact d'un run
+
+**Question :** Quel numéro de version le modèle a-t-il reçu ? Quelle différence existe-t-il entre le modèle sauvegardé dans un run et un modèle enregistré dans le registre ?
+
+**Réponse :**
 
 Le premier enregistrement de `food11` a créé la **version 1**, statut READY.
 L'artifact d'un run est le modèle sauvegardé par une exécution déterminée.
@@ -24,7 +28,11 @@ versions ont été comparés : ils sont identiques. Le run de publication est
 distinct d'un entraînement et conserve le run source dans ses tags.
 Voir [les preuves du registre](reports/lab3/registry.json).
 
-## Q2 — Aliases et versions
+## Question 2 — Aliases et versions
+
+**Question :** Qu'est-ce qui remplace les anciens stages MLflow ? Pourquoi versionner le modèle séparément du run et pourquoi un alias est-il plus flexible ?
+
+**Réponse :**
 
 Les anciens stages intégrés `Staging` et `Production` sont dépréciés.
 Les aliases sont des noms définis par l'utilisateur, par exemple `champion`
@@ -36,7 +44,11 @@ ni le numéro de version. Les tags fournissent des annotations supplémentaires.
 Versionner séparément permet de gérer le modèle livré à l'API, tout en conservant
 le lien vers le run qui a produit ses poids.
 
-## Q3 — Charger une URI MLflow
+## Question 3 — Charger une URI MLflow
+
+**Question :** Pourquoi charger `models:/food11@champion` plutôt qu'un fichier `.pth` ? Que faut-il changer pour servir une nouvelle version ?
+
+**Réponse :**
 
 `src/food11/serve.py` utilise
 `mlflow.pyfunc.load_model("models:/food11@champion")` une fois au démarrage.
@@ -50,7 +62,11 @@ Aucune reconstruction de l'image n'est nécessaire si le prétraitement, la
 signature et les dépendances restent compatibles. Un changement incompatible
 nécessiterait une adaptation du code et une nouvelle image.
 
-## Q4 — Ordre des couches et cache
+## Question 4 — Ordre des couches et cache
+
+**Question :** Pourquoi copier les fichiers de dépendances et exécuter `uv sync` avant de copier le code ? Que devient le cache lorsqu'on modifie une ligne de `serve.py` ?
+
+**Réponse :**
 
 Le Dockerfile copie `pyproject.toml` et `uv.lock`, puis installe les dépendances
 avec `uv sync --frozen --no-dev --no-install-project`. Cette dernière option
@@ -63,7 +79,11 @@ invalide cette installation. Le builder contient uv et l'environnement Python ;
 le runtime ne récupère que l'environnement et le code. Le cache uv de BuildKit
 n'est pas inclus dans l'image finale.
 
-## Q5 — Taille des images et docker history
+## Question 5 — Taille des images et docker history
+
+**Question :** Quelle différence de taille observe-t-on entre les images single-stage et multi-stage ? Quelles couches sont les plus volumineuses dans `docker history` ?
+
+**Réponse :**
 
 Les mesures réelles sont enregistrées dans [docker-images.json](reports/lab3/docker-images.json)
 et les couches dans [history-multi.txt](reports/lab3/history-multi.txt) et
@@ -94,7 +114,11 @@ docker history food11-api:latest
 docker history food11-api:single
 ```
 
-## Q6 — Rôle de .dockerignore
+## Question 6 — Rôle de .dockerignore
+
+**Question :** Quel est l'effet de l'absence de `.dockerignore` sur la vitesse de construction et la taille de l'image ? Quels dossiers peuvent faire échouer la construction ?
+
+**Réponse :**
 
 Le fichier utilise une liste d'inclusion : seuls les Dockerfiles, les deux fichiers
 de dépendances et `src/` entrent dans le contexte ; les bytecodes Python sont exclus.
@@ -108,7 +132,11 @@ une `.venv` Windows sur l'environnement Linux peut casser ses exécutables et se
 bibliothèques. Les gros datasets ralentissent les transferts et peuvent remplir
 le disque ; leur simple présence n'entraîne pas systématiquement un échec.
 
-## Q7 — Réseau du conteneur et serveur MLflow
+## Question 7 — Réseau du conteneur et serveur MLflow
+
+**Question :** Pourquoi le conteneur ne peut-il pas joindre le serveur MLflow de l'hôte avec `127.0.0.1:5000` ? À quoi correspond `host.docker.internal` ?
+
+**Réponse :**
 
 En réseau bridge, `127.0.0.1` désigne le conteneur lui-même. Sous Docker Desktop,
 `host.docker.internal` résout vers une adresse de l'hôte accessible depuis le
@@ -132,7 +160,11 @@ stockage ; changer seulement les options du serveur ne convertit pas les URIs
 Ce serveur est prévu pour le lab sur une machine de développement. Un déploiement
 partagé nécessiterait notamment authentification, TLS et stockage persistant.
 
-## Q8 — Nouveau conteneur, même image
+## Question 8 — Nouveau conteneur, même image
+
+**Question :** Après arrêt du conteneur et création d'un nouveau depuis la même image, le modèle se charge-t-il sans reconstruction ? Qu'est-ce qui est inclus dans l'image et qu'est-ce qui est récupéré à l'exécution ?
+
+**Réponse :**
 
 L'image embarque Python, les dépendances et le code. Les poids et les catégories
 sont téléchargés au démarrage depuis MLflow. Un nouveau conteneur peut donc
@@ -149,7 +181,11 @@ de confiance de **5,96 × 10⁻⁸**. Voir [restart-check.json](reports/lab3/res
 Les prédictions doivent être comparables ; une prédiction n'est pas forcément
 correcte et le score softmax n'est pas une garantie de justesse.
 
-## Q9 — Partager exactement l'image construite
+## Question 9 — Partager exactement l'image construite
+
+**Question :** Le Dockerfile est versionné dans Git, mais pas l'image construite. Que manque-t-il pour qu'une autre machine puisse télécharger et exécuter exactement cette image ?
+
+**Réponse :**
 
 Git versionne la recette, pas les couches binaires. Il reste à pousser l'image
 dans un registre tel que GHCR ou Docker Hub, à donner accès aux machines cibles
