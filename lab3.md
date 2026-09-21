@@ -1,5 +1,18 @@
 # Lab 3 — Modèle Food-11, API et Docker
 
+**Compte rendu final — lab réalisé et vérifié le 21 septembre 2026.**
+Ce document présente les neuf questions de l'énoncé, leurs réponses, les
+résultats mesurés et les commandes pour refaire la démonstration.
+
+| Livrable | Accès |
+| --- | --- |
+| API de prédiction | [src/food11/serve.py](src/food11/serve.py) |
+| Construction multi-stage | [Dockerfile](Dockerfile) et [.dockerignore](.dockerignore) |
+| Comparaison single-stage | [Dockerfile.single](Dockerfile.single) |
+| Image publique | [Docker Hub : ghandourali/food11-api](https://hub.docker.com/r/ghandourali/food11-api/tags) |
+| Preuves des tests | [reports/lab3](reports/lab3) |
+| Guide de téléchargement | [DOCKER_HUB.md](DOCKER_HUB.md) |
+
 ## Objectif et continuité
 
 Le lab 1 prépare et versionne les images. Le lab 2 entraîne ResNet18 et compare
@@ -188,8 +201,8 @@ correcte et le score softmax n'est pas une garantie de justesse.
 **Réponse :**
 
 Git versionne la recette, pas les couches binaires. Pour la partager, il faut pousser l'image
-dans un registre tel que GHCR ou Docker Hub, à donner accès aux machines cibles
-et à déployer une référence immuable `nom@sha256:...` plutôt que seulement `latest`.
+dans un registre tel que GHCR ou Docker Hub, donner accès aux machines cibles
+et déployer une référence immuable `nom@sha256:...` plutôt que seulement `latest`.
 L'architecture doit être compatible. Les machines cibles doivent aussi pouvoir
 joindre MLflow et son stockage. Pour figer totalement le comportement, il faut
 également figer la version du modèle : un alias mutable ne garantit pas le même
@@ -233,6 +246,58 @@ Il faut un serveur MLflow accessible qui contient `food11@champion`, ou refaire
 le lab 2 puis enregistrer et publier son modèle. Les rapports et preuves exportées
 restent lisibles sur GitHub sans exécuter ces services.
 
+## Tester une photo dans le navigateur
+
+Avec MLflow sur le port 5002 et le conteneur `food11-api` démarrés :
+
+1. Ouvrir **http://127.0.0.1:8002/docs**.
+2. Déplier **POST /predict**, puis cliquer sur **Try it out**.
+3. Cliquer sur **Choose File** et sélectionner une photo de nourriture.
+4. Cliquer sur **Execute**.
+5. Lire **Response body** : `category` est la catégorie prédite et
+   `confidence` est le score softmax, entre 0 et 1.
+
+Les exemples d'images à essayer sont dans [data_preview](data_preview).
+Le score exprime la confiance du modèle, pas une garantie de justesse.
+Le service choisit parmi les onze catégories Food-11 ; il ne possède pas de
+catégorie « inconnu » pour les photos qui ne représentent pas ces aliments.
+
+La démonstration tourne sur la machine qui héberge les services. Un lien
+`127.0.0.1` ne permet pas au professeur d'accéder à distance à cet ordinateur.
+Les réponses HTTP exportées ci-dessous sont consultables sur GitHub même
+lorsque les services sont arrêtés. Docker Hub permet de télécharger l'image,
+mais ne fournit pas une page publique d'inférence.
+
+## Arrêter aujourd'hui et reprendre plus tard
+
+Pour terminer la séance sans supprimer le conteneur :
+
+```powershell
+docker stop food11-api
+```
+
+Arrêter ensuite les serveurs locaux avec **Ctrl+C** dans leurs terminaux.
+Conserver `mlflow.db`, `mlruns/` et `mlartifacts/` : ils contiennent le registre,
+les expériences et les modèles. Ils restent locaux et ignorés par Git.
+Ne pas confondre la sauvegarde du code sur GitHub avec celle de ces fichiers.
+
+Pour reprendre, ouvrir Docker Desktop, puis lancer depuis le dossier du projet :
+
+```powershell
+# Terminal 1 : laisser le serveur démarré
+.\scripts\start_mlflow_serving.ps1
+```
+
+Dans un deuxième terminal :
+
+```powershell
+docker start food11-api
+```
+
+Attendre la fin du chargement du modèle, puis ouvrir http://127.0.0.1:8002/docs.
+La reconstruction de l'image et la republication sur Docker Hub ne sont pas
+nécessaires pour cette reprise.
+
 ## Vérifications réalisées le 21 septembre 2026
 
 | Contrôle | Résultat et preuve |
@@ -245,10 +310,11 @@ restent lisibles sur GitHub sans exécuter ces services.
 | Contenu de l'image | Aucun dataset, poids ou registre MLflow embarqué : [preuve](reports/lab3/image-content-check.json) |
 | Cache | Après modification de `serve.py`, étape `uv sync` marquée CACHED : [journal](reports/lab3/build-multi.txt) |
 | Images | Deux recettes construites, tailles et identifiants mesurés : [mesures](reports/lab3/docker-images.json) |
+| Publication Docker Hub | Dépôt public, deux tags et digest identiques à l'image testée : [preuve](reports/lab3/dockerhub.json) |
 
 Les images d'aperçu servent à vérifier le fonctionnement de l'API ; ces onze
 requêtes ne constituent pas une nouvelle mesure d'accuracy sur le jeu de test.
-Le conteneur final `food11-api` est laissé actif et son healthcheck Docker est
+À la fin des tests, le conteneur `food11-api` avait le healthcheck Docker
 `healthy`. Le script [verify_docker.py](scripts/verify_docker.py) conserve la
 procédure de mesure et de recréation ; ses deux noms de conteneurs doivent être
 libres pour relancer une vérification complète.
