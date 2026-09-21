@@ -1,0 +1,11 @@
+# Only files required by either Dockerfile enter the build context.
+**
+!Dockerfile
+!Dockerfile.single
+!.dockerignore
+!pyproject.toml
+!uv.lock
+!src/
+!src/**
+**/__pycache__/
+**/*.pyc

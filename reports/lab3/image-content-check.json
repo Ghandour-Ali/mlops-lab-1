@@ -1,0 +1,1 @@
+{"platform": "linux", "excluded_paths_absent": ["data", "mlruns", "mlartifacts", "mlflow.db", ".git"]}

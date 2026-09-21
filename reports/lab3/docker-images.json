@@ -1,0 +1,14 @@
+[
+  {
+    "tag": "food11-api:latest",
+    "id": "sha256:bdcc0239051d13ace6ef3be079a9e510cd8384ba86ae36c744c69caeac458a0f",
+    "bytes": 443411589,
+    "platform": "linux/amd64"
+  },
+  {
+    "tag": "food11-api:single",
+    "id": "sha256:12f310d8e220b0cdc0f269dbf0ae0eaa656e0407d80a7a46088a15c0059a7fce",
+    "bytes": 467166498,
+    "platform": "linux/amd64"
+  }
+]

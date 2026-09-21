@@ -1,0 +1,9 @@
+{
+  "registered_model": "food11",
+  "initial_version": "1",
+  "champion_version": "2",
+  "source_training_run": "3acfe1a891994c78b89de31feb99ef30",
+  "packaging_run": "e3c07f29b0a44a5f9b07fdd79371ad53",
+  "weights_identical": true,
+  "source": "models:/m-6e5baa032bd04eeb843c07cf483b8df5"
+}

@@ -1,0 +1,19 @@
+{
+  "containers": [
+    {
+      "id": "5182420b1760f5411d1e725acf7486e3e760996df8b1bb2c470384e10ada3d43",
+      "name": "food11-api-lab3-first",
+      "image": "sha256:bdcc0239051d13ace6ef3be079a9e510cd8384ba86ae36c744c69caeac458a0f",
+      "mounts": []
+    },
+    {
+      "id": "b0ddc959dfcef8518194d7463927c732916fcd0ea02c4f4be51b82510147ac3a",
+      "name": "food11-api",
+      "image": "sha256:bdcc0239051d13ace6ef3be079a9e510cd8384ba86ae36c744c69caeac458a0f",
+      "mounts": []
+    }
+  ],
+  "same_image": true,
+  "identical_restart_predictions": true,
+  "local_vs_docker_max_confidence_difference": 5.960464477539063e-08
+}

@@ -1,4 +1,4 @@
-# Food-11 — Labs 1 et 2
+# Food-11 — Labs 1, 2 et 3
 
 Projet de préparation et de versionnement des données avec Git/DVC, puis entraînement et suivi d'expériences avec MLflow.
 
@@ -6,8 +6,9 @@ Projet de préparation et de versionnement des données avec Git/DVC, puis entra
 
 | Élément | Contenu |
 | --- | --- |
-| [Rapport Lab 1](Labs.md/lab1.md) | Réponses aux 8 questions, données et versions |
-| [Rapport Lab 2](Labs.md/lab2.md) | Réponses aux 9 questions, protocole et résultats |
+| [Rapport Lab 1](lab1.md) | Réponses aux 8 questions, données et versions |
+| [Rapport Lab 2](lab2.md) | Réponses aux 9 questions, protocole et résultats |
+| [Rapport Lab 3](lab3.md) | Registre MLflow, API FastAPI, Docker et preuves de tests |
 | [Préparation complète](src/food11/data.py) | RGB 128×128, 11 catégories, splits officiels, mini ≤100 images/classe/split |
 | [Entraînement](src/food11/train.py) | ResNet18 préentraîné, 11 sorties, paramètres CLI, suivi MLflow |
 | [Comparaison](src/food11/compare_runs.py) | Quatre configurations et vérification des modèles sauvegardés |
@@ -93,3 +94,19 @@ Si les objets sont déjà en cache, `dvc checkout` suffit à la place de `dvc pu
 Les fichiers volumineux restent dans DVC ; GitHub contient code, pointeurs et comptes rendus. Le statut du stockage distant et de son affichage est documenté dans le rapport du lab 1.
 
 Contrôle du 17 septembre 2026 : transfert complet vers DagsHub et `dvc push` confirmé à jour. L'interface du miroir Git DagsHub reste à confirmer ; elle n'est pas nécessaire pour lire les rapports et résultats publiés ici.
+
+
+## Lab 3 — Prédiction dans Docker
+
+Les trois rapports complets sont à la racine : **[lab1.md](lab1.md)**,
+**[lab2.md](lab2.md)** et **[lab3.md](lab3.md)**.
+
+- [API FastAPI](src/food11/serve.py) : `/health` et `/predict`, modèle `food11@champion`.
+- [Dockerfile multi-stage](Dockerfile), [.dockerignore](.dockerignore) et [référence single-stage](Dockerfile.single).
+- [Résultats des vérifications](reports/lab3) : registre, prédictions, redémarrage et tailles mesurées.
+- [Démarrage MLflow pour Docker](scripts/start_mlflow_serving.ps1) : port 5002 et artifacts HTTP.
+
+Le [rapport du lab 3](lab3.md#reproduire-sur-la-machine-du-lab) donne les commandes complètes.
+L'API Docker est accessible localement sur http://127.0.0.1:8002/docs quand les
+services tournent. Cette adresse n'est pas une démonstration publique ; les preuves
+exportées sur GitHub permettent l'évaluation sans accéder à l'ordinateur de l'auteur.

@@ -1,0 +1,56 @@
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.single
+#1 transferring dockerfile: 663B 0.0s done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.11.13-slim-bookworm
+#2 DONE 0.4s
+
+#3 [internal] load metadata for ghcr.io/astral-sh/uv:0.12.10
+#3 DONE 0.5s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 223B done
+#4 DONE 0.1s
+
+#5 [internal] load build context
+#5 transferring context: 406B done
+#5 DONE 0.1s
+
+#6 [stage-0 1/6] FROM docker.io/library/python:3.11.13-slim-bookworm@sha256:86adf8dbadc3d6e82ee5dd2c74bec2e1c2467cdad47886280501df722372d2e1
+#6 resolve docker.io/library/python:3.11.13-slim-bookworm@sha256:86adf8dbadc3d6e82ee5dd2c74bec2e1c2467cdad47886280501df722372d2e1
+#6 resolve docker.io/library/python:3.11.13-slim-bookworm@sha256:86adf8dbadc3d6e82ee5dd2c74bec2e1c2467cdad47886280501df722372d2e1 0.3s done
+#6 DONE 0.3s
+
+#7 FROM ghcr.io/astral-sh/uv:0.12.10@sha256:2bb3ebca0a796a155094a27773d290c4b074572e6107f171d88d086682fd2500
+#7 resolve ghcr.io/astral-sh/uv:0.12.10@sha256:2bb3ebca0a796a155094a27773d290c4b074572e6107f171d88d086682fd2500 0.3s done
+#7 DONE 0.4s
+
+#8 [stage-0 2/6] COPY --from=ghcr.io/astral-sh/uv:0.12.10 /uv /usr/local/bin/uv
+#8 CACHED
+
+#9 [stage-0 3/6] WORKDIR /app
+#9 CACHED
+
+#10 [stage-0 4/6] COPY pyproject.toml uv.lock ./
+#10 CACHED
+
+#11 [stage-0 5/6] RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen --no-dev --no-install-project
+#11 CACHED
+
+#12 [stage-0 6/6] COPY src/ ./src/
+#12 DONE 0.8s
+
+#13 exporting to image
+#13 exporting layers
+#13 exporting layers 52.0s done
+#13 exporting manifest sha256:d41ec9afca121a77c5eac44e5034ec845ee8c994bd0016d051d331f782b5b471 0.0s done
+#13 exporting config sha256:10d82a6ab389710da62a53a925b1a213bfd7d054c7621b77800e429223c7ed99 0.1s done
+#13 exporting attestation manifest sha256:75253374f5868d4a56b187f474a7fc96523f4e52e869bad5783c53ef11006177 0.1s done
+#13 exporting manifest list sha256:12f310d8e220b0cdc0f269dbf0ae0eaa656e0407d80a7a46088a15c0059a7fce
+#13 exporting manifest list sha256:12f310d8e220b0cdc0f269dbf0ae0eaa656e0407d80a7a46088a15c0059a7fce 0.1s done
+#13 naming to docker.io/library/food11-api:single 0.0s done
+#13 unpacking to docker.io/library/food11-api:single
+#13 unpacking to docker.io/library/food11-api:single 19.3s done
+#13 DONE 71.6s
