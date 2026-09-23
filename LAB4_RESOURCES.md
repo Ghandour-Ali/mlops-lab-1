@@ -1,6 +1,6 @@
 # Isolation et retrait du Lab 4
 
-Le Lab 4 est développé sur la branche `lab4`, à partir de `333dbcd`, dans le worktree `.verification/lab4-work`. La branche `main` et le dossier `.verification/lab2-work` restent ceux des labs 1–3. Aucun entraînement supplémentaire ni changement du registre MLflow original n'est nécessaire.
+Le Lab 4 a été développé et testé séparément, puis fusionné dans `main` à la demande de l'utilisateur (commit de fusion `3462623`). Les quatre labs sont maintenant réunis dans `.verification/lab2-work`. Les conteneurs et le volume du Lab 4 gardent les mêmes noms ; le modèle original reste préservé.
 
 ## Ressources propres au lab
 

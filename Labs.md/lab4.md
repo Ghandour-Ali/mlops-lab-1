@@ -33,7 +33,7 @@ docker compose up -d --build --wait
 `seed_lab4.py` copie les artefacts et vérifie les empreintes SHA-256 des poids. Il crée un run dans le nouveau serveur, enregistre `food11` et assigne `champion`. Il refuse d'écraser un modèle déjà enregistré. Les fichiers source sont seulement lus.
 
 Sur le poste utilisé pour le lab, le projet est dans
-`C:\Users\user\Documents\Mlopslab1\.verification\lab4-work`.
+`C:\Users\user\Documents\Mlopslab1\.verification\lab2-work`.
 Les commandes se lancent à la racine de ce dossier, pas dans `Labs.md`.
 
 Pour les démarrages suivants, ouvrir Docker Desktop puis double-cliquer sur
@@ -121,7 +121,7 @@ Pour tolérer une panne de machine : orchestrateur multi-hôte (par exemple Kube
 
 - [Ordre de démarrage et healthchecks — Docker](https://docs.docker.com/compose/how-tos/startup-order/).
 - [Serveur MLflow et transfert HTTP des artefacts](https://mlflow.org/docs/latest/self-hosting/architecture/tracking-server/).
-- [Inventaire et retrait du Lab 4](../LAB4_RESOURCES.md). Le travail reste sur `lab4`, sans fusion dans `main`.
+- [Inventaire et retrait du Lab 4](../LAB4_RESOURCES.md). Le Lab 4 est maintenant fusionné dans `main` avec les labs 1–3.
 
 ## Résultats vérifiés le 24 septembre 2026
 
@@ -137,7 +137,7 @@ Les trois services sont **healthy**. L'interface est accessible sur <http://127.
 | Conteneur sans volume | Stop/start conserve le registre ; suppression/recréation le perd |
 | `down -v` sur le projet jetable | Le registre redevient vide |
 | MLflow inaccessible au démarrage | L'API échoue explicitement avec le code de sortie 3 |
-| Isolation | Branche main, alias original et empreinte des poids source inchangés |
+| Isolation lors des tests avant fusion | Branche main, alias original et empreinte des poids source inchangés |
 
 Les versions 1 et 2 de cet exercice utilisent les **mêmes poids** : ce test démontre le chargement d'une nouvelle version, pas une amélioration de précision. Les 11 réponses HTTP valides ne constituent pas une nouvelle mesure d'accuracy.
 
@@ -153,4 +153,4 @@ Preuves consultables sans lancer Docker :
 - [Préservation des labs précédents](../reports/lab4/isolation.json).
 - [Identifiants des images testées](../reports/lab4/images.json).
 
-Le compte rendu est publié sur la branche `lab4`. Les poids et la base de données restent dans le volume Docker, hors Git. Le professeur peut lire ici les réponses et les preuves ; pour exécuter lui-même l'application sur une autre machine, il doit construire les images et importer un export du modèle comme expliqué plus haut.
+Le compte rendu est publié sur la branche `main`, avec les trois autres labs. Les preuves d'isolation décrivent les tests effectués avant la fusion. Les poids et la base de données restent dans le volume Docker, hors Git. Le professeur peut lire ici les réponses et les preuves ; pour exécuter lui-même l'application sur une autre machine, il doit construire les images et importer un export du modèle comme expliqué plus haut.

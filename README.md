@@ -1,6 +1,6 @@
 # Food-11 — Labs 1, 2, 3 et 4
 
-Sur la branche **`lab4`**, le projet inclut une page d'envoi de photos et une stack Docker Compose (MLflow, API, Streamlit). Les labs 1–3 restent conservés sur `main`. Voir le [rapport Lab 4](Labs.md/lab4.md) pour le lancement, les 11 réponses et les preuves, et l'[inventaire des ressources](LAB4_RESOURCES.md) pour le retrait du lab.
+Les quatre labs sont réunis sur la branche **`main`**. Le Lab 4 ajoute une page d'envoi de photos et une stack Docker Compose (MLflow, API, Streamlit). Voir le [rapport Lab 4](Labs.md/lab4.md) pour le lancement, les 11 réponses et les preuves, et l'[inventaire des ressources](LAB4_RESOURCES.md) pour le retrait du lab.
 
 Projet de préparation et de versionnement des données avec Git/DVC, puis entraînement et suivi d'expériences avec MLflow.
 
