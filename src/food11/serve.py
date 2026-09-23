@@ -23,7 +23,10 @@ MAX_IMAGE_BYTES = 10 * 1024 * 1024
 async def lifespan(app: FastAPI):
     mlflow.set_tracking_uri(os.getenv("MLFLOW_TRACKING_URI", "http://127.0.0.1:5000"))
     torch.set_num_threads(4)
-    model = mlflow.pyfunc.load_model(MODEL_URI)
+    version = mlflow.MlflowClient().get_model_version_by_alias("food11", "champion")
+    # Pin the resolved version for this process; a restart resolves the alias again.
+    model = mlflow.pyfunc.load_model(f"models:/food11/{version.version}")
+    app.state.model_version = str(version.version)
     # Read labels from the loaded model's actual training run, not an assumed order.
     run_id = model.metadata.run_id
     if not run_id:
@@ -49,6 +52,11 @@ app = FastAPI(title="Food-11 prediction API", lifespan=lifespan)
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
+
+@app.get("/model")
+def model_info():
+    return {"name": "food11", "alias": "champion", "loaded_version": app.state.model_version}
 
 
 @app.post("/predict")
