@@ -1,0 +1,67 @@
+{
+  "url": "http://inference:8000",
+  "health": {
+    "status": "ok"
+  },
+  "predictions": [
+    {
+      "image": "class_0.jpg",
+      "category": "Bread",
+      "confidence": 0.9990310668945312
+    },
+    {
+      "image": "class_1.jpg",
+      "category": "Dairy product",
+      "confidence": 0.9887668490409851
+    },
+    {
+      "image": "class_10.jpg",
+      "category": "Vegetable-Fruit",
+      "confidence": 0.9840367436408997
+    },
+    {
+      "image": "class_2.jpg",
+      "category": "Dessert",
+      "confidence": 0.9906210899353027
+    },
+    {
+      "image": "class_3.jpg",
+      "category": "Egg",
+      "confidence": 0.9931981563568115
+    },
+    {
+      "image": "class_4.jpg",
+      "category": "Fried food",
+      "confidence": 0.9784513711929321
+    },
+    {
+      "image": "class_5.jpg",
+      "category": "Meat",
+      "confidence": 0.9912789463996887
+    },
+    {
+      "image": "class_6.jpg",
+      "category": "Noodles-Pasta",
+      "confidence": 0.9903744459152222
+    },
+    {
+      "image": "class_7.jpg",
+      "category": "Rice",
+      "confidence": 0.9978511333465576
+    },
+    {
+      "image": "class_8.jpg",
+      "category": "Seafood",
+      "confidence": 0.9903963804244995
+    },
+    {
+      "image": "class_9.jpg",
+      "category": "Soup",
+      "confidence": 0.9663722515106201
+    }
+  ],
+  "invalid.txt": 400,
+  "empty.jpg": 400,
+  "oversized.jpg": 413,
+  "missing_file": 422
+}

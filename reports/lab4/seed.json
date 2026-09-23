@@ -1,0 +1,10 @@
+{
+  "source_run_id": "e3c07f29b0a44a5f9b07fdd79371ad53",
+  "run_id": "f7c54ee14cc1448b9908209394e22bd2",
+  "version": "1",
+  "alias": "champion",
+  "identical_weight_sha256": {
+    "data/model.pth": "412c060e9bca9020eb172b250f21b9840f7181fe2f3270121ceb34ee4e527325",
+    "data/pickle_module_info.txt": "e0a90fe617e727b1c0a2f152d235ca0f9df721b407cb26644ce5e7f7bec29518"
+  }
+}

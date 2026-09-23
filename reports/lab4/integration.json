@@ -1,0 +1,69 @@
+{
+  "frontend_http": 200,
+  "compose_ps": [
+    {
+      "Service": "frontend",
+      "State": "running",
+      "Health": "healthy",
+      "Ports": "127.0.0.1:8501->8501/tcp"
+    },
+    {
+      "Service": "inference",
+      "State": "running",
+      "Health": "healthy",
+      "Ports": "8000/tcp"
+    },
+    {
+      "Service": "mlflow",
+      "State": "running",
+      "Health": "healthy",
+      "Ports": "127.0.0.1:5500->5000/tcp"
+    }
+  ],
+  "api_tests": "PASS: health, 11 image predictions, four invalid requests",
+  "streamlit_upload_click": {
+    "category_display": "Cat\u00e9gorie : Bread",
+    "confidence_display": "99.9%"
+  },
+  "promotion": {
+    "before": {
+      "name": "food11",
+      "alias": "champion",
+      "loaded_version": "1"
+    },
+    "after_alias_change": {
+      "name": "food11",
+      "alias": "champion",
+      "loaded_version": "1"
+    },
+    "after_restart": {
+      "name": "food11",
+      "alias": "champion",
+      "loaded_version": "2"
+    },
+    "same_weights": true
+  },
+  "operational_down_up": {
+    "alias_preserved": true,
+    "model_loads_from_preserved_artifacts": true,
+    "version": "2"
+  },
+  "tested_at_utc": "2026-09-23T22:03:14.765728+00:00",
+  "final_model": {
+    "name": "food11",
+    "alias": "champion",
+    "loaded_version": "2"
+  },
+  "without_volume": {
+    "stop_start_preserves": true,
+    "remove_recreate_loses_registry": true
+  },
+  "disposable_volume": {
+    "down_up_preserves": true,
+    "down_v_up_loses_registry": true
+  },
+  "unready_mlflow": {
+    "inference_exit_code": "3",
+    "startup_failed": true
+  }
+}

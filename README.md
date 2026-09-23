@@ -1,4 +1,6 @@
-# Food-11 — Labs 1, 2 et 3
+# Food-11 — Labs 1, 2, 3 et 4
+
+Sur la branche **`lab4`**, le projet inclut une page d'envoi de photos et une stack Docker Compose (MLflow, API, Streamlit). Les labs 1–3 restent conservés sur `main`. Voir le [rapport Lab 4](Labs.md/lab4.md) pour le lancement, les 11 réponses et les preuves, et l'[inventaire des ressources](LAB4_RESOURCES.md) pour le retrait du lab.
 
 Projet de préparation et de versionnement des données avec Git/DVC, puis entraînement et suivi d'expériences avec MLflow.
 
@@ -9,6 +11,7 @@ Projet de préparation et de versionnement des données avec Git/DVC, puis entra
 | [Rapport Lab 1](lab1.md) | Réponses aux 8 questions, données et versions |
 | [Rapport Lab 2](lab2.md) | Réponses aux 9 questions, protocole et résultats |
 | [Rapport Lab 3](lab3.md) | Registre MLflow, API FastAPI, Docker et preuves de tests |
+| [Rapport Lab 4](Labs.md/lab4.md) | Trois services Compose, interface photo, registre persistant et 11 réponses |
 | [Préparation complète](src/food11/data.py) | RGB 128×128, 11 catégories, splits officiels, mini ≤100 images/classe/split |
 | [Entraînement](src/food11/train.py) | ResNet18 préentraîné, 11 sorties, paramètres CLI, suivi MLflow |
 | [Comparaison](src/food11/compare_runs.py) | Quatre configurations et vérification des modèles sauvegardés |
@@ -122,3 +125,13 @@ docker pull ghandourali/food11-api:lab3-7ab74c2
 Voir le [guide de démarrage](DOCKER_HUB.md) et la
 [preuve de publication avec digest](reports/lab3/dockerhub.json).
 Le conteneur doit pouvoir joindre MLflow pour charger `food11@champion`.
+
+## Interface du Lab 4
+
+Après initialisation, ouvrir Docker Desktop puis lancer [start-lab4.cmd](start-lab4.cmd).
+La page <http://127.0.0.1:8501> permet de choisir une photo et de cliquer sur **Analyser la photo**.
+Le registre MLflow est disponible sur <http://127.0.0.1:5500>.
+
+Le [rapport complet dans Labs.md/lab4.md](Labs.md/lab4.md) contient les 11 réponses, les commandes de reproduction et les preuves des tests.
+
+![Exemple réel : photo et prédiction](reports/lab4/frontend-demo.png)
