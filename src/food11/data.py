@@ -23,7 +23,7 @@ def category_from_filename(filename: str) -> str:
     label = int(prefix)
     if not 0 <= label < len(CLASSES):
         raise ValueError(f"Invalid Food-11 category: {filename}")
-    return CLASSES[0]  # Intentional Lab 5 failing-PR exercise
+    return CLASSES[label]
 
 
 def resize_image(img: Image.Image, size: int = 128) -> Image.Image:
