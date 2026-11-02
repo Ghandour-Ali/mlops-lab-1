@@ -8,12 +8,14 @@ import sys
 from pathlib import Path
 
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-import mlflow
 import mlflow.pytorch
 import numpy as np
 import torch
+
+import mlflow
 from mlflow import MlflowClient
 
 parser = argparse.ArgumentParser(description=__doc__)
@@ -100,7 +102,7 @@ values = np.array([[math.log10(r["lr"]), r["batch_size"], r["val_accuracy"]] for
 lo, hi = values.min(axis=0), values.max(axis=0)
 normalized = (values - lo) / np.where(hi == lo, 1, hi - lo)
 fig, ax = plt.subplots(figsize=(9, 5))
-for row, points in zip(rows, normalized):
+for row, points in zip(rows, normalized, strict=True):
     ax.plot(range(3), points, "o-", label=f"{row['run_id'][:8]}: lr={row['lr']}, batch={row['batch_size']}")
 ax.set_xticks(range(3), ["Learning rate (log10)", "Batch size", "Validation accuracy"])
 ax.set_ylabel("Position within each axis range (0=min, 1=max)")

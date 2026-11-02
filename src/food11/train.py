@@ -5,13 +5,19 @@ import random
 import sys
 from pathlib import Path
 
-import mlflow
 import mlflow.pytorch
 import torch
 from torch import nn, optim
 from torch.utils.data import DataLoader
 from torchvision import datasets, models
 from torchvision.models import ResNet18_Weights
+
+import mlflow
+
+if __package__:
+    from .validate_data import dataset_fingerprint, validate_dataset
+else:
+    from validate_data import dataset_fingerprint, validate_dataset
 
 
 CLASS_COUNT = 11
@@ -29,6 +35,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--threads", type=int, default=4)
     parser.add_argument("--tracking-uri", default="http://127.0.0.1:5000")
     parser.add_argument("--comparison-group", default="manual")
+    parser.add_argument("--experiment", default="food11")
     return parser.parse_args()
 
 
@@ -92,11 +99,15 @@ def main() -> None:
     torch.manual_seed(args.seed)
     torch.set_num_threads(args.threads)
     root = dataset_root(args.data_root, args.dataset)
+    contract = validate_dataset(root)
+    if not contract["passed"]:
+        raise ValueError("Dataset failed its contract; run validate_data.py for details")
+    fingerprint = dataset_fingerprint(root)
     train_loader, validation_loader, test_loader = make_loaders(root, args.batch_size, args.num_workers)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     mlflow.set_tracking_uri(args.tracking_uri)
-    mlflow.set_experiment("food11")
+    mlflow.set_experiment(args.experiment)
 
     with mlflow.start_run(run_name=f"resnet18_lr{args.lr}_bs{args.batch_size}_seed{args.seed}"):
         mlflow.set_tag("comparison_group", args.comparison_group)
@@ -113,6 +124,7 @@ def main() -> None:
                 "train_images": len(train_loader.dataset),
                 "validation_images": len(validation_loader.dataset),
                 "test_images": len(test_loader.dataset),
+                "dataset_sha256": fingerprint,
             }
         )
         mlflow.log_dict(train_loader.dataset.class_to_idx, "class_to_idx.json")
