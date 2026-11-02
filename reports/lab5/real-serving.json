@@ -1,0 +1,15 @@
+{
+  "prediction": {
+    "category": "Bread",
+    "confidence": 0.9984266757965088
+  },
+  "model": {
+    "name": "food11",
+    "alias": "champion",
+    "loaded_version": "3"
+  },
+  "frontend_health": {
+    "status": 200,
+    "body": "ok"
+  }
+}

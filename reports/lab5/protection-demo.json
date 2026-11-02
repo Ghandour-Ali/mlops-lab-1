@@ -1,0 +1,85 @@
+{
+  "red": {
+    "number": 2,
+    "html_url": "https://github.com/Ghandour-Ali/mlops-lab-1/pull/2",
+    "state": "open",
+    "mergeable_state": "blocked",
+    "sha": "33dd528731a0f544c96e05c8de6962f33425cc03",
+    "checks": [
+      {
+        "name": "push",
+        "conclusion": "skipped",
+        "html_url": "https://github.com/Ghandour-Ali/mlops-lab-1/actions/runs/41473794241/job/125374193709"
+      },
+      {
+        "name": "smoke",
+        "conclusion": "skipped",
+        "html_url": "https://github.com/Ghandour-Ali/mlops-lab-1/actions/runs/41473794241/job/125374192191"
+      },
+      {
+        "name": "push",
+        "conclusion": "skipped",
+        "html_url": "https://github.com/Ghandour-Ali/mlops-lab-1/actions/runs/41473770156/job/125374058154"
+      },
+      {
+        "name": "smoke",
+        "conclusion": "skipped",
+        "html_url": "https://github.com/Ghandour-Ali/mlops-lab-1/actions/runs/41473770156/job/125374058152"
+      },
+      {
+        "name": "test",
+        "conclusion": "failure",
+        "html_url": "https://github.com/Ghandour-Ali/mlops-lab-1/actions/runs/41473794241/job/125373944087"
+      },
+      {
+        "name": "test",
+        "conclusion": "failure",
+        "html_url": "https://github.com/Ghandour-Ali/mlops-lab-1/actions/runs/41473770156/job/125373857110"
+      }
+    ]
+  },
+  "green": {
+    "number": 2,
+    "html_url": "https://github.com/Ghandour-Ali/mlops-lab-1/pull/2",
+    "state": "open",
+    "mergeable_state": "clean",
+    "sha": "4cb227e14f81654d3821c90cde50d1b0aacd83c2",
+    "checks": [
+      {
+        "name": "push",
+        "conclusion": "skipped",
+        "html_url": "https://github.com/Ghandour-Ali/mlops-lab-1/actions/runs/41474581912/job/125377514153"
+      },
+      {
+        "name": "push",
+        "conclusion": "skipped",
+        "html_url": "https://github.com/Ghandour-Ali/mlops-lab-1/actions/runs/41474566337/job/125377497802"
+      },
+      {
+        "name": "smoke",
+        "conclusion": "success",
+        "html_url": "https://github.com/Ghandour-Ali/mlops-lab-1/actions/runs/41474581912/job/125376892791"
+      },
+      {
+        "name": "smoke",
+        "conclusion": "success",
+        "html_url": "https://github.com/Ghandour-Ali/mlops-lab-1/actions/runs/41474566337/job/125376874770"
+      },
+      {
+        "name": "test",
+        "conclusion": "success",
+        "html_url": "https://github.com/Ghandour-Ali/mlops-lab-1/actions/runs/41474581912/job/125376676968"
+      },
+      {
+        "name": "test",
+        "conclusion": "success",
+        "html_url": "https://github.com/Ghandour-Ali/mlops-lab-1/actions/runs/41474566337/job/125376623043"
+      }
+    ]
+  },
+  "merge": {
+    "sha": "07f855f790aa4427a5c26a30fbd783d780a5f90c",
+    "merged": true,
+    "message": "Pull Request successfully merged"
+  }
+}

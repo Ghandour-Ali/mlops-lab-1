@@ -1,0 +1,40 @@
+{
+  "baseline_run_id": "4222f049dde1477ebfb1925d9a1a1b0c",
+  "baseline_version": "3",
+  "candidates": [
+    {
+      "candidate_accuracy": 0.14123222748815165,
+      "champion_accuracy": 0.833175355450237,
+      "n": 1055,
+      "standard_error": 0.01147815491722838,
+      "margin": 0.02295630983445676,
+      "threshold": 0.8561316652846938,
+      "decision": "challenger",
+      "name": "food11",
+      "candidate_version": "4",
+      "previous_champion_version": "3",
+      "metric": "test_accuracy",
+      "dataset_sha256": "e1a6fa003b9b1f56aed4628a5e0b12ac67d0eb580f3749596649be2882ac9854",
+      "dry_run": false,
+      "run_id": "3eff99840c6d4c63af1bd4fce15f0b94",
+      "lr": 1e-06
+    },
+    {
+      "candidate_accuracy": 0.833175355450237,
+      "champion_accuracy": 0.833175355450237,
+      "n": 1055,
+      "standard_error": 0.01147815491722838,
+      "margin": 0.02295630983445676,
+      "threshold": 0.8561316652846938,
+      "decision": "challenger",
+      "name": "food11",
+      "candidate_version": "5",
+      "previous_champion_version": "3",
+      "metric": "test_accuracy",
+      "dataset_sha256": "e1a6fa003b9b1f56aed4628a5e0b12ac67d0eb580f3749596649be2882ac9854",
+      "dry_run": false,
+      "run_id": "2ff2f75a29d84e9a8ac66119c7c21b95",
+      "lr": 0.0001
+    }
+  ]
+}
