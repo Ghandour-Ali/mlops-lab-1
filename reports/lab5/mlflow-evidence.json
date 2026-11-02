@@ -1,0 +1,261 @@
+{
+  "runs": [
+    {
+      "run_id": "4222f049dde1477ebfb1925d9a1a1b0c",
+      "status": "FINISHED",
+      "params": {
+        "dataset_sha256": "e1a6fa003b9b1f56aed4628a5e0b12ac67d0eb580f3749596649be2882ac9854",
+        "test_images": "1055"
+      },
+      "metrics": {
+        "test_accuracy": 0.833175355450237,
+        "test_loss": 0.5128629693205323
+      },
+      "history": {
+        "train_loss": [],
+        "val_loss": [],
+        "val_accuracy": []
+      }
+    },
+    {
+      "run_id": "3eff99840c6d4c63af1bd4fce15f0b94",
+      "status": "FINISHED",
+      "params": {
+        "dataset": "mini",
+        "epochs": "5",
+        "lr": "1e-06",
+        "batch_size": "32",
+        "device": "cpu",
+        "seed": "42",
+        "threads": "4",
+        "architecture": "resnet18",
+        "train_images": "1100",
+        "validation_images": "1094",
+        "test_images": "1055",
+        "dataset_sha256": "e1a6fa003b9b1f56aed4628a5e0b12ac67d0eb580f3749596649be2882ac9854"
+      },
+      "metrics": {
+        "train_loss": 2.423403992219405,
+        "val_loss": 2.447519164198713,
+        "val_accuracy": 0.13345521023765997,
+        "test_accuracy": 0.14123222748815165,
+        "test_loss": 2.440098430082131
+      },
+      "history": {
+        "train_loss": [
+          {
+            "step": 0,
+            "value": 2.624463935331865
+          },
+          {
+            "step": 1,
+            "value": 2.562276671149514
+          },
+          {
+            "step": 2,
+            "value": 2.5207269807295365
+          },
+          {
+            "step": 3,
+            "value": 2.47553560517051
+          },
+          {
+            "step": 4,
+            "value": 2.423403992219405
+          }
+        ],
+        "val_loss": [
+          {
+            "step": 0,
+            "value": 2.6098838362440984
+          },
+          {
+            "step": 1,
+            "value": 2.570918872543837
+          },
+          {
+            "step": 2,
+            "value": 2.5302670891149823
+          },
+          {
+            "step": 3,
+            "value": 2.488359820908123
+          },
+          {
+            "step": 4,
+            "value": 2.447519164198713
+          }
+        ],
+        "val_accuracy": [
+          {
+            "step": 0,
+            "value": 0.09689213893967093
+          },
+          {
+            "step": 1,
+            "value": 0.10694698354661791
+          },
+          {
+            "step": 2,
+            "value": 0.11882998171846434
+          },
+          {
+            "step": 3,
+            "value": 0.12340036563071298
+          },
+          {
+            "step": 4,
+            "value": 0.13345521023765997
+          }
+        ]
+      }
+    },
+    {
+      "run_id": "2ff2f75a29d84e9a8ac66119c7c21b95",
+      "status": "FINISHED",
+      "params": {
+        "dataset": "mini",
+        "epochs": "5",
+        "lr": "0.0001",
+        "batch_size": "32",
+        "device": "cpu",
+        "seed": "42",
+        "threads": "4",
+        "architecture": "resnet18",
+        "train_images": "1100",
+        "validation_images": "1094",
+        "test_images": "1055",
+        "dataset_sha256": "e1a6fa003b9b1f56aed4628a5e0b12ac67d0eb580f3749596649be2882ac9854"
+      },
+      "metrics": {
+        "train_loss": 0.03284104734659195,
+        "val_loss": 0.603168419989633,
+        "val_accuracy": 0.8098720292504571,
+        "test_accuracy": 0.833175355450237,
+        "test_loss": 0.5128629693205323
+      },
+      "history": {
+        "train_loss": [
+          {
+            "step": 0,
+            "value": 1.5620248317718506
+          },
+          {
+            "step": 1,
+            "value": 0.4048717269030484
+          },
+          {
+            "step": 2,
+            "value": 0.1289492026513273
+          },
+          {
+            "step": 3,
+            "value": 0.05712619109587236
+          },
+          {
+            "step": 4,
+            "value": 0.03284104734659195
+          }
+        ],
+        "val_loss": [
+          {
+            "step": 0,
+            "value": 0.882729471492593
+          },
+          {
+            "step": 1,
+            "value": 0.7053116124116524
+          },
+          {
+            "step": 2,
+            "value": 0.6440847743799744
+          },
+          {
+            "step": 3,
+            "value": 0.6194847833085976
+          },
+          {
+            "step": 4,
+            "value": 0.603168419989633
+          }
+        ],
+        "val_accuracy": [
+          {
+            "step": 0,
+            "value": 0.7422303473491774
+          },
+          {
+            "step": 1,
+            "value": 0.7769652650822669
+          },
+          {
+            "step": 2,
+            "value": 0.7897623400365631
+          },
+          {
+            "step": 3,
+            "value": 0.8062157221206582
+          },
+          {
+            "step": 4,
+            "value": 0.8098720292504571
+          }
+        ]
+      }
+    }
+  ],
+  "versions": [
+    {
+      "version": "3",
+      "run_id": "4222f049dde1477ebfb1925d9a1a1b0c",
+      "tags": {},
+      "aliases": [
+        "champion"
+      ]
+    },
+    {
+      "version": "4",
+      "run_id": "3eff99840c6d4c63af1bd4fce15f0b94",
+      "tags": {
+        "gate.candidate_accuracy": "0.14123222748815165",
+        "gate.champion_accuracy": "0.833175355450237",
+        "gate.n": "1055",
+        "gate.standard_error": "0.01147815491722838",
+        "gate.margin": "0.02295630983445676",
+        "gate.threshold": "0.8561316652846938",
+        "gate.decision": "challenger",
+        "gate.name": "food11",
+        "gate.candidate_version": "4",
+        "gate.previous_champion_version": "3",
+        "gate.metric": "test_accuracy",
+        "gate.dataset_sha256": "e1a6fa003b9b1f56aed4628a5e0b12ac67d0eb580f3749596649be2882ac9854",
+        "gate.dry_run": "False"
+      },
+      "aliases": []
+    },
+    {
+      "version": "5",
+      "run_id": "2ff2f75a29d84e9a8ac66119c7c21b95",
+      "tags": {
+        "gate.candidate_accuracy": "0.833175355450237",
+        "gate.champion_accuracy": "0.833175355450237",
+        "gate.n": "1055",
+        "gate.standard_error": "0.01147815491722838",
+        "gate.margin": "0.02295630983445676",
+        "gate.threshold": "0.8561316652846938",
+        "gate.decision": "challenger",
+        "gate.name": "food11",
+        "gate.candidate_version": "5",
+        "gate.previous_champion_version": "3",
+        "gate.metric": "test_accuracy",
+        "gate.dataset_sha256": "e1a6fa003b9b1f56aed4628a5e0b12ac67d0eb580f3749596649be2882ac9854",
+        "gate.dry_run": "False"
+      },
+      "aliases": [
+        "challenger"
+      ]
+    }
+  ],
+  "champion": "3",
+  "challenger": "5"
+}

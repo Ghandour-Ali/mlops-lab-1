@@ -1,8 +1,10 @@
-# Food-11 — Labs 1, 2, 3 et 4
+# Food-11 — Labs 1, 2, 3, 4 et 5
 
-Les quatre labs sont réunis sur la branche **`main`**. Le Lab 4 ajoute une page d'envoi de photos et une stack Docker Compose (MLflow, API, Streamlit). Voir le [rapport Lab 4](Labs.md/lab4.md) pour le lancement, les 11 réponses et les preuves, et l'[inventaire des ressources](LAB4_RESOURCES.md) pour le retrait du lab.
+Les cinq labs sont réunis sur la branche **`main`**. Le Lab 4 ajoute une page d'envoi de photos et une stack Docker Compose (MLflow, API, Streamlit). Voir le [rapport Lab 4](Labs.md/lab4.md) pour le lancement, les 11 réponses et les preuves, et l'[inventaire des ressources](LAB4_RESOURCES.md) pour le retrait du lab.
 
 Projet de préparation et de versionnement des données avec Git/DVC, puis entraînement et suivi d'expériences avec MLflow.
+
+Le **Lab 5** ajoute tests, contrat de données, publication GHCR et promotion contrôlée des modèles. Voir le [rapport et les 12 réponses](Labs.md/lab5.md), les [preuves](reports/lab5) et les [pipelines GitHub Actions](https://github.com/Ghandour-Ali/mlops-lab-1/actions). Main exige désormais une PR avec les checks `test` et `smoke` verts.
 
 ## Parcours de lecture pour la correction
 
@@ -12,6 +14,7 @@ Projet de préparation et de versionnement des données avec Git/DVC, puis entra
 | [Rapport Lab 2](lab2.md) | Réponses aux 9 questions, protocole et résultats |
 | [Rapport Lab 3](lab3.md) | Registre MLflow, API FastAPI, Docker et preuves de tests |
 | [Rapport Lab 4](Labs.md/lab4.md) | Trois services Compose, interface photo, registre persistant et 11 réponses |
+| [Rapport Lab 5](Labs.md/lab5.md) | CI/CD, 38 tests, contrat, GHCR, protection de main, deux candidats et 12 réponses |
 | [Préparation complète](src/food11/data.py) | RGB 128×128, 11 catégories, splits officiels, mini ≤100 images/classe/split |
 | [Entraînement](src/food11/train.py) | ResNet18 préentraîné, 11 sorties, paramètres CLI, suivi MLflow |
 | [Comparaison](src/food11/compare_runs.py) | Quatre configurations et vérification des modèles sauvegardés |

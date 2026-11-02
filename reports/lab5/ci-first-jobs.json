@@ -1,0 +1,248 @@
+{
+  "total_count": 3,
+  "jobs": [
+    {
+      "id": 125366888327,
+      "run_id": 41471768952,
+      "workflow_name": "ci",
+      "head_branch": "lab5-ci-cd",
+      "run_url": "https://api.github.com/repos/Ghandour-Ali/mlops-lab-1/actions/runs/41471768952",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOUSYNnM8AAAAdMHLnhw",
+      "head_sha": "ddf679eb5ba146c60ad1f090c711039bd0698a67",
+      "url": "https://api.github.com/repos/Ghandour-Ali/mlops-lab-1/actions/jobs/125366888327",
+      "html_url": "https://github.com/Ghandour-Ali/mlops-lab-1/actions/runs/41471768952/job/125366888327",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-02T15:27:29Z",
+      "started_at": "2026-11-02T15:27:31Z",
+      "completed_at": "2026-11-02T15:27:49Z",
+      "name": "test",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-02T15:27:32Z",
+          "completed_at": "2026-11-02T15:27:33Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-02T15:27:33Z",
+          "completed_at": "2026-11-02T15:27:34Z"
+        },
+        {
+          "name": "Run astral-sh/setup-uv@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-02T15:27:34Z",
+          "completed_at": "2026-11-02T15:27:37Z"
+        },
+        {
+          "name": "Install locked CPU dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-02T15:27:37Z",
+          "completed_at": "2026-11-02T15:27:41Z"
+        },
+        {
+          "name": "Lint",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-02T15:27:41Z",
+          "completed_at": "2026-11-02T15:27:41Z"
+        },
+        {
+          "name": "Unit and synthetic data-contract tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-02T15:27:41Z",
+          "completed_at": "2026-11-02T15:27:44Z"
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-11-02T15:27:44Z",
+          "completed_at": "2026-11-02T15:27:45Z"
+        },
+        {
+          "name": "Post Run astral-sh/setup-uv@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-11-02T15:27:45Z",
+          "completed_at": "2026-11-02T15:27:47Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2026-11-02T15:27:47Z",
+          "completed_at": "2026-11-02T15:27:47Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15,
+          "started_at": "2026-11-02T15:27:47Z",
+          "completed_at": "2026-11-02T15:27:47Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/Ghandour-Ali/mlops-lab-1/check-runs/125366888327",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000000000,
+      "runner_name": "GitHub Actions 1000000000",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 125367083924,
+      "run_id": 41471768952,
+      "workflow_name": "ci",
+      "head_branch": "lab5-ci-cd",
+      "run_url": "https://api.github.com/repos/Ghandour-Ali/mlops-lab-1/actions/runs/41471768952",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOUSYNnM8AAAAdMHXjlA",
+      "head_sha": "ddf679eb5ba146c60ad1f090c711039bd0698a67",
+      "url": "https://api.github.com/repos/Ghandour-Ali/mlops-lab-1/actions/jobs/125367083924",
+      "html_url": "https://github.com/Ghandour-Ali/mlops-lab-1/actions/runs/41471768952/job/125367083924",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-02T15:27:50Z",
+      "started_at": "2026-11-02T15:27:52Z",
+      "completed_at": "2026-11-02T15:31:28Z",
+      "name": "smoke",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-02T15:27:52Z",
+          "completed_at": "2026-11-02T15:27:54Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-02T15:27:54Z",
+          "completed_at": "2026-11-02T15:27:55Z"
+        },
+        {
+          "name": "Run docker/setup-buildx-action@v3",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-02T15:27:55Z",
+          "completed_at": "2026-11-02T15:28:01Z"
+        },
+        {
+          "name": "Run docker/build-push-action@v6",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-02T15:28:01Z",
+          "completed_at": "2026-11-02T15:31:04Z"
+        },
+        {
+          "name": "Start without a model and probe health",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-02T15:31:04Z",
+          "completed_at": "2026-11-02T15:31:07Z"
+        },
+        {
+          "name": "Logs and cleanup",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-02T15:31:07Z",
+          "completed_at": "2026-11-02T15:31:07Z"
+        },
+        {
+          "name": "Post Run docker/build-push-action@v6",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-11-02T15:31:07Z",
+          "completed_at": "2026-11-02T15:31:08Z"
+        },
+        {
+          "name": "Post Run docker/setup-buildx-action@v3",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-11-02T15:31:08Z",
+          "completed_at": "2026-11-02T15:31:24Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-11-02T15:31:24Z",
+          "completed_at": "2026-11-02T15:31:24Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-11-02T15:31:24Z",
+          "completed_at": "2026-11-02T15:31:24Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/Ghandour-Ali/mlops-lab-1/check-runs/125367083924",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000000001,
+      "runner_name": "GitHub Actions 1000000001",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 125369181841,
+      "run_id": 41471768952,
+      "workflow_name": "ci",
+      "head_branch": "lab5-ci-cd",
+      "run_url": "https://api.github.com/repos/Ghandour-Ali/mlops-lab-1/actions/runs/41471768952",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOUSYNnM8AAAAdMJXmkQ",
+      "head_sha": "ddf679eb5ba146c60ad1f090c711039bd0698a67",
+      "url": "https://api.github.com/repos/Ghandour-Ali/mlops-lab-1/actions/jobs/125369181841",
+      "html_url": "https://github.com/Ghandour-Ali/mlops-lab-1/actions/runs/41471768952/job/125369181841",
+      "status": "completed",
+      "conclusion": "skipped",
+      "created_at": "2026-11-02T15:31:30Z",
+      "started_at": "2026-11-02T15:31:30Z",
+      "completed_at": "2026-11-02T15:31:30Z",
+      "name": "push",
+      "steps": [],
+      "check_run_url": "https://api.github.com/repos/Ghandour-Ali/mlops-lab-1/check-runs/125369181841",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": null,
+      "runner_name": null,
+      "runner_group_id": null,
+      "runner_group_name": null
+    }
+  ]
+}

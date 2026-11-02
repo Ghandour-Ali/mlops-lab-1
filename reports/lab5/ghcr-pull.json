@@ -1,0 +1,17 @@
+{
+  "image": "ghcr.io/ghandour-ali/mlops-lab-1:40ca3b342bf2d56d9be785fb44f7793f47542141",
+  "anonymous_manifest_status": 200,
+  "digest": "sha256:77590f215270f5db70fd00d61a576716adb5c4a6c5feec6ec63bc67032e7ee43",
+  "health": {
+    "status": 200,
+    "json": {
+      "status": "ok"
+    }
+  },
+  "predict_without_model": {
+    "status": 503,
+    "json": {
+      "detail": "Model is not loaded"
+    }
+  }
+}

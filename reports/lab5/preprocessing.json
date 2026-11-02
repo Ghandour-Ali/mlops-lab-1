@@ -1,0 +1,6 @@
+{
+  "images_checked": 11,
+  "equal_to_lab4_torchvision_transform": true,
+  "absolute_tolerance": 0,
+  "duplicate_demo_removed": true
+}
