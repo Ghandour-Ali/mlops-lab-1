@@ -5,7 +5,6 @@ from pathlib import Path
 
 from PIL import Image, ImageOps
 
-
 SPLITS = ("training", "validation", "evaluation")
 CATEGORIES = ("Bread", "Dairy product", "Dessert", "Egg", "Fried food", "Meat",
               "Noodles-Pasta", "Rice", "Seafood", "Soup", "Vegetable-Fruit")

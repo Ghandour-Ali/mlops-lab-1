@@ -12,6 +12,27 @@ CATEGORIES = (
     "Noodles-Pasta", "Rice", "Seafood", "Soup", "Vegetable-Fruit",
 )
 SPLITS = ("training", "evaluation", "validation")
+CLASSES = list(CATEGORIES)
+
+
+def category_from_filename(filename: str) -> str:
+    """Map a Food-11 numeric filename prefix to its category."""
+    prefix, separator, suffix = Path(filename).name.partition("_")
+    if not separator or not suffix or not prefix.isdecimal():
+        raise ValueError(f"Invalid Food-11 filename: {filename}")
+    label = int(prefix)
+    if not 0 <= label < len(CLASSES):
+        raise ValueError(f"Invalid Food-11 category: {filename}")
+    return CLASSES[label]
+
+
+def resize_image(img: Image.Image, size: int = 128) -> Image.Image:
+    """Return a new RGB square image without modifying the input."""
+    if size < 1:
+        raise ValueError("size must be positive")
+    return ImageOps.exif_transpose(img).convert("RGB").resize(
+        (size, size), Image.Resampling.LANCZOS
+    )
 
 
 def prepare(root: Path, mini_limit: int = 100) -> dict:
@@ -42,11 +63,10 @@ def prepare(root: Path, mini_limit: int = 100) -> dict:
     for split, files in sources.items():
         counts[split] = {category: 0 for category in CATEGORIES}
         for source in files:
-            category = CATEGORIES[int(source.stem.split("_")[0])]
+            category = category_from_filename(source.name)
             destination = processed / split / category / source.name
             with Image.open(source) as image:
-                image = ImageOps.exif_transpose(image).convert("RGB")
-                image.resize((128, 128), Image.Resampling.LANCZOS).save(destination, quality=95)
+                resize_image(image).save(destination, quality=95)
             if counts[split][category] < mini_limit:
                 shutil.copyfile(destination, mini / split / category / source.name)
             counts[split][category] += 1

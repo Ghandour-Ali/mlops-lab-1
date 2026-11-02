@@ -1,0 +1,81 @@
+{
+  "passed": true,
+  "min_per_class": 50,
+  "tau": 0.05,
+  "counts": {
+    "training": {
+      "Bread": 100,
+      "Dairy product": 100,
+      "Dessert": 100,
+      "Egg": 100,
+      "Fried food": 100,
+      "Meat": 100,
+      "Noodles-Pasta": 100,
+      "Rice": 100,
+      "Seafood": 100,
+      "Soup": 100,
+      "Vegetable-Fruit": 100
+    },
+    "validation": {
+      "Bread": 100,
+      "Dairy product": 99,
+      "Dessert": 99,
+      "Egg": 100,
+      "Fried food": 100,
+      "Meat": 100,
+      "Noodles-Pasta": 100,
+      "Rice": 96,
+      "Seafood": 100,
+      "Soup": 100,
+      "Vegetable-Fruit": 100
+    },
+    "evaluation": {
+      "Bread": 92,
+      "Dairy product": 100,
+      "Dessert": 89,
+      "Egg": 100,
+      "Fried food": 97,
+      "Meat": 97,
+      "Noodles-Pasta": 100,
+      "Rice": 96,
+      "Seafood": 89,
+      "Soup": 96,
+      "Vegetable-Fruit": 99
+    }
+  },
+  "share_differences": {
+    "Bread": 0.0004985873358816645,
+    "Dairy product": 0.0004154894465680653,
+    "Dessert": 0.0004154894465680653,
+    "Egg": 0.0004985873358816645,
+    "Fried food": 0.0004985873358816645,
+    "Meat": 0.0004985873358816645,
+    "Noodles-Pasta": 0.0004985873358816645,
+    "Rice": 0.0031577197939172408,
+    "Seafood": 0.0004985873358816645,
+    "Soup": 0.0004985873358816645,
+    "Vegetable-Fruit": 0.0004985873358816645
+  },
+  "checks": {
+    "class_folders": {
+      "passed": true,
+      "errors": []
+    },
+    "images_rgb_128": {
+      "passed": true,
+      "errors": []
+    },
+    "minimum_counts": {
+      "passed": true,
+      "errors": []
+    },
+    "cross_split_duplicates": {
+      "passed": true,
+      "errors": []
+    },
+    "class_balance": {
+      "passed": true,
+      "errors": []
+    }
+  }
+}

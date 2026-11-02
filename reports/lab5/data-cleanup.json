@@ -1,0 +1,220 @@
+{
+  "removed": [
+    {
+      "removed": "validation/Dairy product/1_123.jpg",
+      "kept": "training/Dairy product/1_185.jpg",
+      "md5": "9d3f220cbe7201b265196e299ecf297b"
+    },
+    {
+      "removed": "validation/Dessert/2_154.jpg",
+      "kept": "training/Dessert/2_1046.jpg",
+      "md5": "d0c8797eec0f353ef69e53dd11a6660c"
+    },
+    {
+      "removed": "evaluation/Bread/0_1.jpg",
+      "kept": "validation/Bread/0_174.jpg",
+      "md5": "30e624fe96afbac002813af7016e8f3a"
+    },
+    {
+      "removed": "evaluation/Bread/0_105.jpg",
+      "kept": "validation/Bread/0_167.jpg",
+      "md5": "53f61570557f631fd3d4764cd9177f97"
+    },
+    {
+      "removed": "evaluation/Bread/0_13.jpg",
+      "kept": "validation/Bread/0_11.jpg",
+      "md5": "c321ff32a73719691f65941d5c3d635e"
+    },
+    {
+      "removed": "evaluation/Bread/0_131.jpg",
+      "kept": "training/Bread/0_106.jpg",
+      "md5": "41b9e88f4ff18891be2b9ef2702f1c93"
+    },
+    {
+      "removed": "evaluation/Bread/0_138.jpg",
+      "kept": "validation/Bread/0_129.jpg",
+      "md5": "59c8c39974c907dbb0ac194ece8613b2"
+    },
+    {
+      "removed": "evaluation/Bread/0_139.jpg",
+      "kept": "training/Bread/0_186.jpg",
+      "md5": "7dbad304e2fcc28f08cd9aae7edec911"
+    },
+    {
+      "removed": "evaluation/Bread/0_149.jpg",
+      "kept": "validation/Bread/0_152.jpg",
+      "md5": "4b7551a8cae0a88a1488adf0161cf1e8"
+    },
+    {
+      "removed": "evaluation/Bread/0_17.jpg",
+      "kept": "validation/Bread/0_150.jpg",
+      "md5": "0eb25df1aa326f4acf03d81758cd5e57"
+    },
+    {
+      "removed": "evaluation/Dessert/2_112.jpg",
+      "kept": "validation/Dessert/2_120.jpg",
+      "md5": "c0bb4ef8c912526bf85b8fa537f23eff"
+    },
+    {
+      "removed": "evaluation/Dessert/2_117.jpg",
+      "kept": "validation/Dessert/2_129.jpg",
+      "md5": "a21f56e9d4f53e34147bcfa46ddb7704"
+    },
+    {
+      "removed": "evaluation/Dessert/2_129.jpg",
+      "kept": "validation/Dessert/2_132.jpg",
+      "md5": "f4e8cfeb42582232244f6c152f0fd8b0"
+    },
+    {
+      "removed": "evaluation/Dessert/2_134.jpg",
+      "kept": "validation/Dessert/2_133.jpg",
+      "md5": "92a6fdce89c4d3faf2911e6d179e477d"
+    },
+    {
+      "removed": "evaluation/Dessert/2_139.jpg",
+      "kept": "validation/Dessert/2_141.jpg",
+      "md5": "8ec31dcba8519206a319d78e9617e5f2"
+    },
+    {
+      "removed": "evaluation/Dessert/2_14.jpg",
+      "kept": "validation/Dessert/2_12.jpg",
+      "md5": "2a2e773fdb2274624ce4a8ef0ce68ede"
+    },
+    {
+      "removed": "evaluation/Dessert/2_158.jpg",
+      "kept": "validation/Dessert/2_150.jpg",
+      "md5": "22ad73d39e40d2521857ad44965d7d0c"
+    },
+    {
+      "removed": "evaluation/Dessert/2_16.jpg",
+      "kept": "validation/Dessert/2_18.jpg",
+      "md5": "172fe0fc0049dd56dc26de0ffc6e7ddc"
+    },
+    {
+      "removed": "evaluation/Dessert/2_160.jpg",
+      "kept": "validation/Dessert/2_155.jpg",
+      "md5": "f9ad0b0aa447403757fbc8a2941b839b"
+    },
+    {
+      "removed": "evaluation/Dessert/2_166.jpg",
+      "kept": "validation/Dessert/2_164.jpg",
+      "md5": "498cd6f86d32deef84a190622ffd9a09"
+    },
+    {
+      "removed": "evaluation/Dessert/2_174.jpg",
+      "kept": "validation/Dessert/2_176.jpg",
+      "md5": "d36f90d21e28333d395890fde3aa3834"
+    },
+    {
+      "removed": "evaluation/Fried food/4_123.jpg",
+      "kept": "training/Fried food/4_167.jpg",
+      "md5": "3df2dfff52c9a85fe75d88ced3ad911d"
+    },
+    {
+      "removed": "evaluation/Fried food/4_147.jpg",
+      "kept": "validation/Fried food/4_103.jpg",
+      "md5": "135139f830917d5d5def765f63219cbd"
+    },
+    {
+      "removed": "evaluation/Fried food/4_159.jpg",
+      "kept": "validation/Fried food/4_13.jpg",
+      "md5": "fe7c34b12d369390a3d1a165776dbccb"
+    },
+    {
+      "removed": "evaluation/Meat/5_119.jpg",
+      "kept": "validation/Meat/5_174.jpg",
+      "md5": "34b896cafd002d9a2348f2426abfab17"
+    },
+    {
+      "removed": "evaluation/Meat/5_13.jpg",
+      "kept": "validation/Meat/5_123.jpg",
+      "md5": "25ea86815a195d7990a4f3c636c821a6"
+    },
+    {
+      "removed": "evaluation/Meat/5_166.jpg",
+      "kept": "validation/Meat/5_107.jpg",
+      "md5": "0bd67d502fba8fff9718495ba42608c4"
+    },
+    {
+      "removed": "evaluation/Seafood/8_100.jpg",
+      "kept": "validation/Seafood/8_102.jpg",
+      "md5": "b01c173afa82419399c252302f4ed1e7"
+    },
+    {
+      "removed": "evaluation/Seafood/8_108.jpg",
+      "kept": "validation/Seafood/8_110.jpg",
+      "md5": "8c923f5a4d17898df40ced4408f4d313"
+    },
+    {
+      "removed": "evaluation/Seafood/8_123.jpg",
+      "kept": "validation/Seafood/8_125.jpg",
+      "md5": "ae83e9b32cb9057cbd94be12fc8ffce1"
+    },
+    {
+      "removed": "evaluation/Seafood/8_134.jpg",
+      "kept": "validation/Seafood/8_130.jpg",
+      "md5": "deed73787e8f2ab09939fee30a6237f8"
+    },
+    {
+      "removed": "evaluation/Seafood/8_137.jpg",
+      "kept": "validation/Seafood/8_133.jpg",
+      "md5": "c0bf0a42a69f50a71e66b11d46e2dc9f"
+    },
+    {
+      "removed": "evaluation/Seafood/8_138.jpg",
+      "kept": "validation/Seafood/8_134.jpg",
+      "md5": "c796958a5a9cd0626d30ba6b569b1228"
+    },
+    {
+      "removed": "evaluation/Seafood/8_139.jpg",
+      "kept": "validation/Seafood/8_139.jpg",
+      "md5": "072359c4abc2fef2f3782f1f84aa45ee"
+    },
+    {
+      "removed": "evaluation/Seafood/8_140.jpg",
+      "kept": "validation/Seafood/8_141.jpg",
+      "md5": "50b596f9f6f81b490cf16a858de8d040"
+    },
+    {
+      "removed": "evaluation/Seafood/8_164.jpg",
+      "kept": "validation/Seafood/8_167.jpg",
+      "md5": "189451a2899a70d8f0219c28efca9314"
+    },
+    {
+      "removed": "evaluation/Seafood/8_177.jpg",
+      "kept": "validation/Seafood/8_183.jpg",
+      "md5": "d58b382e0ba0206b054c305cace10561"
+    },
+    {
+      "removed": "evaluation/Seafood/8_186.jpg",
+      "kept": "validation/Seafood/8_187.jpg",
+      "md5": "739db322bb13b76c16606dc779c43d70"
+    },
+    {
+      "removed": "evaluation/Soup/9_148.jpg",
+      "kept": "validation/Soup/9_151.jpg",
+      "md5": "143a0f0457eaae5f9d97f6dca532077f"
+    },
+    {
+      "removed": "evaluation/Soup/9_150.jpg",
+      "kept": "validation/Soup/9_152.jpg",
+      "md5": "bb6b204b56c8a419138f6c4b69039ded"
+    },
+    {
+      "removed": "evaluation/Soup/9_162.jpg",
+      "kept": "validation/Soup/9_166.jpg",
+      "md5": "b3b4b6e73543451750a2dfba33e77235"
+    },
+    {
+      "removed": "evaluation/Soup/9_170.jpg",
+      "kept": "validation/Soup/9_172.jpg",
+      "md5": "7a26e59d94d04e53228d75ee7f770548"
+    },
+    {
+      "removed": "evaluation/Vegetable-Fruit/10_106.jpg",
+      "kept": "validation/Vegetable-Fruit/10_138.jpg",
+      "md5": "164e1be3d15e95226f28aaa4b5d42d2a"
+    }
+  ],
+  "source_unchanged": true
+}

@@ -1,0 +1,254 @@
+{
+  "passed": false,
+  "min_per_class": 50,
+  "tau": 0.05,
+  "counts": {
+    "training": {
+      "Bread": 100,
+      "Dairy product": 100,
+      "Dessert": 100,
+      "Egg": 100,
+      "Fried food": 100,
+      "Meat": 100,
+      "Noodles-Pasta": 100,
+      "Rice": 100,
+      "Seafood": 100,
+      "Soup": 100,
+      "Vegetable-Fruit": 100
+    },
+    "validation": {
+      "Bread": 100,
+      "Dairy product": 100,
+      "Dessert": 100,
+      "Egg": 100,
+      "Fried food": 100,
+      "Meat": 100,
+      "Noodles-Pasta": 100,
+      "Rice": 96,
+      "Seafood": 100,
+      "Soup": 100,
+      "Vegetable-Fruit": 100
+    },
+    "evaluation": {
+      "Bread": 100,
+      "Dairy product": 100,
+      "Dessert": 100,
+      "Egg": 100,
+      "Fried food": 100,
+      "Meat": 100,
+      "Noodles-Pasta": 100,
+      "Rice": 96,
+      "Seafood": 100,
+      "Soup": 100,
+      "Vegetable-Fruit": 100
+    }
+  },
+  "share_differences": {
+    "Bread": 0.0003317850033178471,
+    "Dairy product": 0.0003317850033178471,
+    "Dessert": 0.0003317850033178471,
+    "Egg": 0.0003317850033178471,
+    "Fried food": 0.0003317850033178471,
+    "Meat": 0.0003317850033178471,
+    "Noodles-Pasta": 0.0003317850033178471,
+    "Rice": 0.003317850033178499,
+    "Seafood": 0.0003317850033178471,
+    "Soup": 0.0003317850033178471,
+    "Vegetable-Fruit": 0.0003317850033178471
+  },
+  "checks": {
+    "class_folders": {
+      "passed": true,
+      "errors": []
+    },
+    "images_rgb_128": {
+      "passed": true,
+      "errors": []
+    },
+    "minimum_counts": {
+      "passed": true,
+      "errors": []
+    },
+    "cross_split_duplicates": {
+      "passed": false,
+      "errors": [
+        [
+          "training/Dairy product/1_185.jpg",
+          "validation/Dairy product/1_123.jpg"
+        ],
+        [
+          "training/Dessert/2_1046.jpg",
+          "validation/Dessert/2_154.jpg"
+        ],
+        [
+          "validation/Bread/0_174.jpg",
+          "evaluation/Bread/0_1.jpg"
+        ],
+        [
+          "validation/Bread/0_167.jpg",
+          "evaluation/Bread/0_105.jpg"
+        ],
+        [
+          "validation/Bread/0_11.jpg",
+          "evaluation/Bread/0_13.jpg"
+        ],
+        [
+          "training/Bread/0_106.jpg",
+          "evaluation/Bread/0_131.jpg"
+        ],
+        [
+          "validation/Bread/0_129.jpg",
+          "evaluation/Bread/0_138.jpg"
+        ],
+        [
+          "training/Bread/0_186.jpg",
+          "evaluation/Bread/0_139.jpg"
+        ],
+        [
+          "validation/Bread/0_152.jpg",
+          "evaluation/Bread/0_149.jpg"
+        ],
+        [
+          "validation/Bread/0_150.jpg",
+          "evaluation/Bread/0_17.jpg"
+        ],
+        [
+          "validation/Dessert/2_120.jpg",
+          "evaluation/Dessert/2_112.jpg"
+        ],
+        [
+          "validation/Dessert/2_129.jpg",
+          "evaluation/Dessert/2_117.jpg"
+        ],
+        [
+          "validation/Dessert/2_132.jpg",
+          "evaluation/Dessert/2_129.jpg"
+        ],
+        [
+          "validation/Dessert/2_133.jpg",
+          "evaluation/Dessert/2_134.jpg"
+        ],
+        [
+          "validation/Dessert/2_141.jpg",
+          "evaluation/Dessert/2_139.jpg"
+        ],
+        [
+          "validation/Dessert/2_12.jpg",
+          "evaluation/Dessert/2_14.jpg"
+        ],
+        [
+          "validation/Dessert/2_150.jpg",
+          "evaluation/Dessert/2_158.jpg"
+        ],
+        [
+          "validation/Dessert/2_18.jpg",
+          "evaluation/Dessert/2_16.jpg"
+        ],
+        [
+          "validation/Dessert/2_155.jpg",
+          "evaluation/Dessert/2_160.jpg"
+        ],
+        [
+          "validation/Dessert/2_164.jpg",
+          "evaluation/Dessert/2_166.jpg"
+        ],
+        [
+          "validation/Dessert/2_176.jpg",
+          "evaluation/Dessert/2_174.jpg"
+        ],
+        [
+          "training/Fried food/4_167.jpg",
+          "evaluation/Fried food/4_123.jpg"
+        ],
+        [
+          "validation/Fried food/4_103.jpg",
+          "evaluation/Fried food/4_147.jpg"
+        ],
+        [
+          "validation/Fried food/4_13.jpg",
+          "evaluation/Fried food/4_159.jpg"
+        ],
+        [
+          "validation/Meat/5_174.jpg",
+          "evaluation/Meat/5_119.jpg"
+        ],
+        [
+          "validation/Meat/5_123.jpg",
+          "evaluation/Meat/5_13.jpg"
+        ],
+        [
+          "validation/Meat/5_107.jpg",
+          "evaluation/Meat/5_166.jpg"
+        ],
+        [
+          "validation/Seafood/8_102.jpg",
+          "evaluation/Seafood/8_100.jpg"
+        ],
+        [
+          "validation/Seafood/8_110.jpg",
+          "evaluation/Seafood/8_108.jpg"
+        ],
+        [
+          "validation/Seafood/8_125.jpg",
+          "evaluation/Seafood/8_123.jpg"
+        ],
+        [
+          "validation/Seafood/8_130.jpg",
+          "evaluation/Seafood/8_134.jpg"
+        ],
+        [
+          "validation/Seafood/8_133.jpg",
+          "evaluation/Seafood/8_137.jpg"
+        ],
+        [
+          "validation/Seafood/8_134.jpg",
+          "evaluation/Seafood/8_138.jpg"
+        ],
+        [
+          "validation/Seafood/8_139.jpg",
+          "evaluation/Seafood/8_139.jpg"
+        ],
+        [
+          "validation/Seafood/8_141.jpg",
+          "evaluation/Seafood/8_140.jpg"
+        ],
+        [
+          "validation/Seafood/8_167.jpg",
+          "evaluation/Seafood/8_164.jpg"
+        ],
+        [
+          "validation/Seafood/8_183.jpg",
+          "evaluation/Seafood/8_177.jpg"
+        ],
+        [
+          "validation/Seafood/8_187.jpg",
+          "evaluation/Seafood/8_186.jpg"
+        ],
+        [
+          "validation/Soup/9_151.jpg",
+          "evaluation/Soup/9_148.jpg"
+        ],
+        [
+          "validation/Soup/9_152.jpg",
+          "evaluation/Soup/9_150.jpg"
+        ],
+        [
+          "validation/Soup/9_166.jpg",
+          "evaluation/Soup/9_162.jpg"
+        ],
+        [
+          "validation/Soup/9_172.jpg",
+          "evaluation/Soup/9_170.jpg"
+        ],
+        [
+          "validation/Vegetable-Fruit/10_138.jpg",
+          "evaluation/Vegetable-Fruit/10_106.jpg"
+        ]
+      ]
+    },
+    "class_balance": {
+      "passed": true,
+      "errors": []
+    }
+  }
+}
